@@ -8,6 +8,8 @@
 package Project1;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.io.*;
 
 public class Database {
 
@@ -65,5 +67,11 @@ public class Database {
 	 * +printSummary() = Prints a summary of the database—including the total number of books, users, and transaction records—to standard output
 	 */
 	
-	
+	//TODO finish method
+	public void loadBooksFromFile(String filename) throws IOException {
+		File bookStorage = new File(filename);
+		Scanner sc = new Scanner(bookStorage);
+		
+		
+	}
 }
