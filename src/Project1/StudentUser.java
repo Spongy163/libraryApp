@@ -1,5 +1,5 @@
 /* Brighton Drill
- * Title: User class
+ * Title: StudentUser class
  * Date: 2/14/2026
  * Description: A data structure that stores information regarding library users and provides functionality as well.
  */
@@ -10,54 +10,127 @@ package Project1;
 import java.util.ArrayList;
 
 public class StudentUser {
-	
 	/* STATIC DATA FIELDS
-	 * - defaultIDNumber:int = Creates a unique ID Number for a user created using the no argument constructor
+	 * - userCount:int
 	 */
 	
-	private static int defaultIDNumber = 100;
+	private static int userCount = 0;
 	
 	/* INSTANCE DATA FIELDS
 	 * - userID:String = Stores the user's ID
-	 * - checkedOutBooks:ArrayList<Book> = Stores books currently checked out by the user
+	 * - name:String = stores the student's name
+	 * - major:String = stores the student's major
+	 * - checkedOutBooks:ArrayList<Book> = Stores books currently checked out by the student. 
 	 */
 	
 	private String userID;
+	private String name;
+	private String major;
 	private ArrayList<Book> checkedOutBooks;
-	
-	/* CONSTRUCTORS
-	 * + User() userID = Default constructor that uses defaultIDNumber to create a unique user ID and initializes checkedOutBooks.
-	 * + User(userID:String) = A constructor that accepts and stores a custom userID and initializes checkedOutBooks.
+
+	/**
+	 * CONSTRUCTOR
+	 * Initializes a StudentUser object
+	 * Accepts and stores userID and name
+	 * Stores "CS" as the student's major
+	 * Initializes checkedOutBooks as an empty ArrayList<Book>
+	 * 
+	 * @param userID sets user ID
+	 * @param name sets user name
 	 */
 	
-	public StudentUser() {
-		this.userID = "ID-" + defaultIDNumber;
-		this.checkedOutBooks = new ArrayList<>();
-		defaultIDNumber ++;
+	public StudentUser(String userId, String name) {
+		this.userID = userId;
+		this.name = name;
+		this.major = "CS";
+		this.checkedOutBooks =  new ArrayList<>();
+		userCount ++;
 	}
-	
-	public StudentUser(String userID) {
+
+	/**
+	 * CONSTRUCTOR
+	 * Initializes a StudentUser object
+	 * Accepts and stores userID, name, and major
+	 * Initializes checkedOutBooks as an empty ArrayList<Book>
+	 * 
+	 * @param userID sets user ID
+	 * @param name sets user name
+	 * @param major sets user major
+	 */
+	public StudentUser(String userID, String name, String major) {
 		this.userID = userID;
+		this.name = name;
+		this.major = major;
 		this.checkedOutBooks = new ArrayList<>();
+		userCount++;
 	}
 
 	//GETTER and SETTER methods
 	
-	//userID
+	/**getUserCount()
+	 * returnts the number of users initialized
+	 * 
+	 * @return int the number of Users initialized 
+	 */
+	public static int getUserCount() {
+		return userCount;
+	}
+	
+	/**getUserID()
+	 * returns the Student user's ID
+	 * 
+	 * @return userID
+	 */
 	public String getUserID() {
 		return userID;
 	}
 
+	/**setUserID()
+	 * sets the usersID to the parameter 
+	 * 
+	 * @param userID 
+	 */
 	public void setUserID(String userID) {
 		this.userID = userID;
 	}
 
-	//defaultIDNUMBER (Does not allow changing this number)
-	public static int getDefaultIDNumber() {
-		return defaultIDNumber;
+	/**getName()
+	 * 
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
-	
-	//checkedOutBooks (Does not allow changing the reference)
+
+	/**setName()
+	 * 
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**getMajor()
+	 * 
+	 * @return the major
+	 */
+	public String getMajor() {
+		return major;
+	}
+
+	/**setMajor()
+	 * 
+	 * @param major the major to set
+	 */
+	public void setMajor(String major) {
+		this.major = major;
+	}
+
+	/**getCheckedOutBooks()
+	 * returns the Student's checked out books
+	 * 
+	 * @return checkedOutBooks
+	 */
 	public ArrayList<Book> getCheckedOutBooks() {
 		return checkedOutBooks;
 	}
@@ -72,7 +145,12 @@ public class StudentUser {
 	 * + toString():String = returns the user attributes as a string. overrides java toString() method.
 	 */
 	
-	
+	/**addBook() 
+	 * Attempts to add a book to the User's checked out books
+	 * 
+	 * @param book
+	 * @return boolean = whether the book addition was successful or unsuccessful
+	 */
 	public boolean addBook(Book book) {
 		if(!book.isCheckedOut()) { //checkOut() method automatically switches isCheckedOut to true if valid
 			book.checkOut();
@@ -83,6 +161,12 @@ public class StudentUser {
 		return false;
 	}
 	
+	/**removeBook()
+	 * Attempts to remove a book from the User's checked out books
+	 * 
+	 * @param book
+	 * @return boolean = whether the book removal was successful or unsuccessful
+	 */
 	public boolean removeBook(Book book) {
 		if(book.isCheckedOut() && hasBook(book.getIsbn())) { 
 			book.returnBook();
@@ -92,10 +176,21 @@ public class StudentUser {
 		return false;
 	}
 	
+	/**getCheckedOutCount()
+	 * returns how many books a Student has checked out
+	 * 
+	 * @return int = checkedOutBooks.size();
+	 */
 	public int getCheckedOutCount() {
 		return checkedOutBooks.size();
 	}
 	
+	/**hasBook() 
+	 * Searches checkedOutBooks for a book based on isbn
+	 * 
+	 * @param isbn
+	 * @return boolean: whether the book exists or not
+	 */
 	public boolean hasBook (String isbn) {
 		for(Book book : checkedOutBooks) {
 			if(book.getIsbn().equals(isbn)) {
@@ -106,10 +201,18 @@ public class StudentUser {
 		return false;
 	}
 	
+	/**printInfo()
+	 * prints the toString() method to the standard output
+	 */
 	public void printInfo() {
 		System.out.println(this.toString());
 	}
 	
+	/** toString()
+	 * Overrides java toString() converts StudentUser to a string. 
+	 * 
+	 * @return Student User attributes as a string
+	 */
 	@Override
 	public String toString() {
 		return "User [userID=" + userID + ", checkedOutBooks=" + checkedOutBooks + "]";
