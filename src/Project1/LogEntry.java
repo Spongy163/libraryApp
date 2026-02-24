@@ -1,5 +1,105 @@
+/* Brighton Drill
+ * Title: Log Entry
+ * Date: 2/23/2026
+ * Description: Structured data that contains information about book checkouts and returns
+ */
+
 package Project1;
 
-public class LogEntry {
+import java.time.LocalDateTime;
 
+public class LogEntry {
+	/* STATIC FIELDS
+	 * entryCount:int = tracks the amount of log entries created. Useful for data analytics
+	 */
+	
+	private static int entryCount = 0;
+	
+	/* INSTANCE FIELDS
+	 * -action:String = Stores the type of transaction: "CHECKOUT" or "RETURN"
+	 * -title:String = Stores the book title
+	 * -userName:String = Stores the student's name
+	 * -timeStamp:LocalDateTime = stores the current date and time of the transaction
+	 */
+	
+	private String action;
+	private String title;
+	private String userName;
+	private LocalDateTime timeStamp;
+	
+	
+	/**CONSTRUCTOR
+	 * Initializes LogEntry object
+	 * Accepts and sets action, title, and userName
+	 * Initializes timeStamp as current time
+	 * 
+	 * @param action sets action to "CHECKOUT" or "RETURN"
+	 * @param title sets title from book
+	 * @param userName sets userName from StudentUser
+	 */
+	public LogEntry(String action, String title, String userName) {
+		this.action = action;
+		this.title = title;
+		this.userName = userName;
+		this.timeStamp = LocalDateTime.now();
+		entryCount++;
+	}
+
+	/* GETTER Methods
+	 * There are no setter methods as the data should be immutable
+	 */
+	
+	/**
+	 * @return the entryCount
+	 */
+	public static int getEntryCount() {
+		return entryCount;
+	}
+
+
+	/**
+	 * @return the action
+	 */
+	public String getAction() {
+		return action;
+	}
+
+
+	/**
+	 * @return the title
+	 */
+	public String getTitle() {
+		return title;
+	}
+
+
+	/**
+	 * @return the userName
+	 */
+	public String getUserName() {
+		return userName;
+	}
+
+
+	/**
+	 * @return the timeStamp
+	 */
+	public LocalDateTime getTimeStamp() {
+		return timeStamp;
+	}
+
+	/**
+	 * @return LogEntry as a String
+	 */
+	@Override
+	public String toString() {
+		return "LogEntry [action=" + action + ", title=" + title + ", userName=" + userName + ", timeStamp=" + timeStamp
+				+ "]";
+	}
+	
+	
+	
+	
+	
+	
 }
