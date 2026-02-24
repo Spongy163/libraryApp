@@ -40,57 +40,93 @@ public class Book {
 		bookCount ++;
 	}
 	
-	// GETTER and SETTER
+	// GETTER and SETTER Methods
 	
-	//title
+	/**
+	 * @return the title
+	 */
 	public String getTitle() {
 		return title;
 	}
 
+	/**setTitle()
+	 * 
+	 * @param title the title to set
+	 */
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	
-	//isbn
+
+	/**getIsbn()
+	 * 
+	 * @return the isbn
+	 */
 	public String getIsbn() {
 		return isbn;
 	}
 
+	/**setIsbn()
+	 * 
+	 * @param isbn the isbn to set
+	 */
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
 	}
-	
-	//isCheckedOut
+
+	/**isCheckedOut()
+	 * 
+	 * @return isCheckedOut
+	 */
 	public boolean isCheckedOut() {
 		return isCheckedOut;
 	}
 
+	/**setCheckedOut()
+	 * 
+	 * @param isCheckedOut set the checkout status
+	 */
 	public void setCheckedOut(boolean isCheckedOut) {
 		this.isCheckedOut = isCheckedOut;
 	}
-	
-	//bookCount
+
+	/**getDueDate()
+	 * 
+	 * @return the dueDate
+	 */
+	public LocalDate getDueDate() {
+		return dueDate;
+	}
+
+	/**setDueDate
+	 * 
+	 * @param dueDate the dueDate to set
+	 */
+	public void setDueDate(LocalDate dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	/**getBookCount()
+	 * 
+	 * @return the bookCount
+	 */
 	public static int getBookCount() {
 		return bookCount;
 	}
 	
-	//dueDate
-	public LocalDate getDueDate() {
-		return this.dueDate;
-	}
-	
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
-	}
 	
 	/* METHODS
 	 * checkOut():boolean = checks isCheckedOut status. If false sets isCheckedOut to true and checkOut() returns true. If true does nothing and checkOut() returns false.
 	 * returnBook():boolean = checks isCheckedOut status. If true sets isCheckedOut to false and checkOut() returns true. If true does nothing and checkOut() returns false.
+	 * isOverdue():boolean = determines whether or not a book is overdue
 	 * printInfo():void = prints the toString() to the standard output
 	 * toString():String = converts the most important attributes to a printable string
 	 */
 	
-	//checkout
+	/**checkOut()
+	 * checks isCheckedOut status. If false sets isCheckedOut to true and checkOut() returns true. If true does nothing and checkOut() returns false.
+	 * 
+	 * @return boolean the check out was successful
+	 */
 	public boolean checkOut() {
 		if (!isCheckedOut) {
 			isCheckedOut = true;
@@ -98,8 +134,12 @@ public class Book {
 		}
 		return false;
 	}
-	
-	//return book
+
+	/**returnBook()
+	 * checks isCheckedOut status. If true sets isCheckedOut to false and checkOut() returns true. If true does nothing and checkOut() returns false.
+	 * 
+	 * @return boolean the return was successful
+	 */
 	public boolean returnBook() {
 		if (isCheckedOut) {
 			isCheckedOut = false;
@@ -108,19 +148,33 @@ public class Book {
 		return false;
 	}
 	
-	//isOverdue
+	/**isOverdue()
+	 * determines whether or not a book is overdue
+	 * 
+	 * @return boolean book is overdue
+	 */
+	public boolean isOverdue() {
+		if(dueDate.isAfter(LocalDate.now())){
+			return true;
+		}
+		return false;
+	}
 	
 	
-	//print info
+	/**printInfo()
+	 * prints the toString() to the standard output
+	 * 
+	 */
 	public void printInfo() {
 		System.out.println(this.toString());
 	}
-	
-	//toString() override 
+
+	/**toString()
+	 * converts the Book object into string format
+	 */
+	@Override
 	public String toString() {
-		return "[Book Title: " + title + ", ISBN: " + isbn + ", Checked Out Status: " + isCheckedOut + "]";
+		return "Book [title=" + title + ", isbn=" + isbn + ", isCheckedOut=" + isCheckedOut + ", dueDate=" + dueDate
+				+ "]";
 	}
-	
-	
-	
 }
