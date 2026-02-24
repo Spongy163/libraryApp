@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class StudentUser {
 	/* STATIC DATA FIELDS
-	 * - userCount:int
+	 * - userCount:int = counts how many users are created. Useful for data analytics
 	 */
 	
 	private static int userCount = 0;
@@ -68,7 +68,7 @@ public class StudentUser {
 	//GETTER and SETTER methods
 	
 	/**getUserCount()
-	 * returnts the number of users initialized
+	 * returns the number of users initialized
 	 * 
 	 * @return int the number of Users initialized 
 	 */
@@ -84,14 +84,35 @@ public class StudentUser {
 	public String getUserID() {
 		return userID;
 	}
+	
+	/**getUserIDAsInt()
+	 * returns the Student user's ID as an int value
+	 * useful for insertion sorting and binary search algorithms
+	 * 
+	 * @return userIDAsInt : int 
+	 */
+	public int getUserIDAsInt() {
+		int userIDAsInt = Integer.parseInt(userID.substring(userID.indexOf('-') + 1));
+		
+		return userIDAsInt;
+	}
 
-	/**setUserID()
+	/**setUserID() *Overload
 	 * sets the usersID to the parameter 
 	 * 
-	 * @param userID 
+	 * @param userID : String
 	 */
 	public void setUserID(String userID) {
 		this.userID = userID;
+	}
+	
+	/**setUserID() *Overload
+	 * sets the userID to the parameter
+	 * 
+	 * @param userID : int
+	 */
+	public void setUserID(int userIDAsInt) {
+		this.userID = "ID-" + userIDAsInt;
 	}
 
 	/**getName()

@@ -64,13 +64,32 @@ public class Book {
 	public String getIsbn() {
 		return isbn;
 	}
-
-	/**setIsbn()
+	
+	/**getIsbnAsInt()
+	 * returns only the number portion of the isbn as an int
 	 * 
-	 * @param isbn the isbn to set
+	 * @return isbnAsInt : int
+	 */
+	public int getIsbnAsInt() {
+		int isbnAsInt = Integer.parseInt(isbn.substring(isbn.indexOf('-') + 1));
+		return isbnAsInt;
+	}
+
+	/**setIsbn() *overload
+	 * 
+	 * @param isbn : String, the formatted isbn to set
 	 */
 	public void setIsbn(String isbn) {
 		this.isbn = isbn;
+	}
+	
+	/**setIsbn() *overload
+	 * 
+	 * 
+	 * @param number : int, the isbn number alone without formatting
+	 */
+	public void setIsbn(int number) {
+		this.isbn = "ISBN-" + number;
 	}
 
 	/**isCheckedOut()
