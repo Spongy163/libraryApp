@@ -44,6 +44,24 @@ public class LogEntry {
 		this.timeStamp = LocalDateTime.now();
 		entryCount++;
 	}
+	
+	/**CONSTRUCTOR
+	 * Initializes LogEntry object
+	 * This Constructor is for loading saved logEntries
+	 * Accepts and sets action, title, userName, and timeStamp
+	 * 
+	 * @param action sets action to "CHECKOUT" or "RETURN"
+	 * @param title sets title from book
+	 * @param userName sets userName from StudentUser
+	 * @param timeStamp 
+	 */
+	public LogEntry(String action, String title, String userName, String timeStamp) {
+		this.action = action;
+		this.title = title;
+		this.userName = userName;
+		this.timeStamp = LocalDateTime.parse(timeStamp);
+		entryCount++;
+	}
 
 	/* GETTER Methods
 	 * There are no setter methods as the data should be immutable

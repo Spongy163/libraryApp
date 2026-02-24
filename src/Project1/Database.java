@@ -198,6 +198,21 @@ public class Database {
 	    }
 	}
 	
+	public void loadTransactionLogFromSaveFile(String filename) throws IOException {
+		File transactionStorage = new File(filename);
+		int lineCount = countFileLines(transactionStorage);
+		
+		Scanner fileReader = new Scanner(transactionStorage);
+		for(int i = 0; i < lineCount; i++) {
+			LogEntry entry;
+			String[] split = fileReader.nextLine().trim().split(" ");
+			
+			entry = new LogEntry(split[0], split[1], split[2], split[3]);
+			transactionLog.add(entry);
+		}
+		
+	}
+	
 	/**
 	 * Uses a binary search algorithm to return a book by ISBN
 	 * Converts ISBN to an int for comparisons 
@@ -255,6 +270,32 @@ public class Database {
 		}
 		
 		return null;
+	}
+	
+	/** 
+	 * Saves the current userIDs, Books, and transaction logs to seperate files for long term storage
+	 * Keeps the data in sorted order for faster boot times
+	 * only one save available 
+	 * replaces old save
+	 */
+	public void saveData() throws IOException {
+		PrintWriter bookSave = new PrintWriter("bookStorage");
+		PrintWriter userSave = new PrintWriter("userStorage");
+		PrintWriter transactionSave = new PrintWriter("transactionStorage");
+		
+		for(Book book : books) {
+			bookSave.println(book.getTitle() + ' ' + book.getIsbnAsInt());
+		}
+		for(StudentUser user : users) {
+			userSave.println(user.getUserID() + ' ' + user.getName() + ' ' + user.getMajor());
+		}
+		for(LogEntry entry : transactionLog) {
+			transactionSave.println(entry.getAction() + ' ' + entry.getTitle() + ' ' + entry.getUserName() + ' ' + entry.getTimeStamp());
+		}
+		
+		bookSave.close();
+		userSave.close();
+		transactionSave.close();
 	}
 
 	@Override
