@@ -113,7 +113,7 @@ public class Library {
 			return false;
 		}
 		
-		return user.addBook(book);
+		return user.removeBook(book);
 		
 	}
 	
