@@ -193,7 +193,6 @@ public class Book {
 	 */
 	@Override
 	public String toString() {
-		return "Book [title=" + title + ", isbn=" + isbn + ", isCheckedOut=" + isCheckedOut + ", dueDate=" + dueDate
-				+ "]";
+		return title + " " + isbn + " DueDate: " + dueDate + " Checked out:" + isCheckedOut;
 	}
 }

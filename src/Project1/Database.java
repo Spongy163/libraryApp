@@ -30,7 +30,7 @@ public class Database {
 	 * @param booksFilename the name of the file storing the books
 	 * @param usersFilename the name of the file storing the users
 	 */
-	public Database(String booksFilename, String usersFilename) throws IOException {
+	public Database() {
 		this.books = new ArrayList<Book>();
 		this.users = new ArrayList<StudentUser>();
 		this.transactionLog = new ArrayList<LogEntry>();
@@ -243,6 +243,29 @@ public class Database {
 	}
 	
 	/**
+	 * 
+	 * 
+	 * 
+	 * @param keyword
+	 * @return
+	 */
+	public ArrayList<Book> findBooksWithKeyword(String keyword) {
+		ArrayList<Book> matchingBooks = new ArrayList<>();
+		
+		for(Book book : books) {
+			if(book.getTitle().toLowerCase().contains(keyword.toLowerCase())) {
+				matchingBooks.add(book);
+			}
+			
+		}
+		
+		if (matchingBooks.size() > 0) {
+			return matchingBooks;
+		}
+		return null; 
+	}
+	
+	/**
 	 * Uses a binary search algorithm to return a user by userID
 	 * comparisons are not determined by case but by '-' location
 	 * Converts userID to int for processing 
@@ -270,6 +293,27 @@ public class Database {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * returns an ArrayList of books that are overdue
+	 * 
+	 * @return an ArrayList of books that are overdue
+	 */
+	public ArrayList<Book> findOverdueBooks() {
+		ArrayList<Book> overdueBooks = new ArrayList<>();
+		
+		for(Book book : books) {
+			if(book.isOverdue() && book.isCheckedOut()) {
+				overdueBooks.add(book);
+			}
+		}
+		
+		if(overdueBooks.size() > 0) {
+		return null;
+		}
+		
+		return overdueBooks;
 	}
 	
 	/** 
