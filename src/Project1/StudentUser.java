@@ -225,6 +225,8 @@ public class StudentUser {
 	public void printInfo() {
 		System.out.println(this.toString());
 	}
+
+	
 	
 	/** toString()
 	 * Overrides java toString() converts StudentUser to a string. 
@@ -233,8 +235,7 @@ public class StudentUser {
 	 */
 	@Override
 	public String toString() {
-		return "User [userID=" + userID + ", checkedOutBooks=" + checkedOutBooks + "]";
+		return "StudentUser [userID=" + userID + ", name=" + name + ", major=" + major + ", checkedOutBooks="+ checkedOutBooks + "]";
 	}
-
 	
 }

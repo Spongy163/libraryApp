@@ -60,7 +60,7 @@ public class Interface {
 		}
 		
 		do {
-			System.out.println("Enter choice: ");
+			System.out.print("Enter choice: ");
 			input = sc.nextInt();
 			sc.nextLine();
 			if (input <= 0 || input > max) {
@@ -80,15 +80,18 @@ public class Interface {
 	 * @throws IOException
 	 */
 	public void start() throws IOException {
+		boolean rantests = false;
 		boolean continueLoop = true;
 		do {
 			System.out.println("======== LIBRARY APP ========");
 			System.out.println("[1] menu");
 			System.out.println("[2] credits");
-			System.out.println("[3] exit");
+			System.out.println("[3] Run tests");
+			System.out.println("[4] Data Analytics");
+			System.out.println("[5] exit");
 			System.out.println("=============================");
 			
-			switch (promptValidInput(3)) {
+			switch (promptValidInput(5)) {
 				case 1:
 					printMenu();
 					break;
@@ -96,6 +99,21 @@ public class Interface {
 					showCredits();
 					break;
 				case 3:
+					if(rantests) {
+						System.out.println("tests have already run");
+						pause();
+						break;
+					}
+					rantests = true;
+					testAddBorrowedBooks();
+					testCheckoutBook();
+					pause();
+					break;
+				case 4:
+					System.out.print(library.returnAnalytics());
+					pause();
+					break;
+				case 5:
 					continueLoop = false;
 					break;
 			}
@@ -153,7 +171,7 @@ public class Interface {
 				continue;
 			}
 
-			boolean result = library.checkOutBook(user, book);
+			boolean result = library.checkoutBook(user, book);
 
 			if (result)
 				System.out.println(isbn + " Checkout successful");
@@ -172,7 +190,7 @@ public class Interface {
 			StudentUser user = library.findUserByID(userId);
 			Book book = library.searchBookByISBN(isbn);
 
-			boolean result = library.checkOutBook(user, book);
+			boolean result = library.checkoutBook(user, book);
 
 			System.out.print("User=" + userId + "  ISBN=" + isbn + " -> ");
 
@@ -232,12 +250,13 @@ public class Interface {
 		System.out.println("[1] Search book");
 		System.out.println("[2] Checkout book");
 		System.out.println("[3] Return book");
-		System.out.println("[4] Display borrowed books");
+		System.out.println("[4] Display user borrowed books");
 		System.out.println("[5] Check overdue books");
-		System.out.println("[6] Return");
+		System.out.println("[6] Print database summary");
+		System.out.println("[7] Return");
 		System.out.println("=============================");
 		
-		switch (promptValidInput(6)) {
+		switch (promptValidInput(7)) {
 		case 1:
 			searchBook();
 			break;
@@ -254,6 +273,10 @@ public class Interface {
 			checkOverdueBooks();
 			break;
 		case 6:
+			library.printDatabaseSummary();
+			pause();
+			break;
+		case 7:
 			return;
 		}	
 	}
@@ -321,16 +344,15 @@ public class Interface {
 
 	    String title = sc.nextLine();
 
-	    ArrayList<Book> books = library.searchBookByKeyword(title);
+	    Book book = library.searchBookByFullTitle(title);
 
-	    if (books == null || books.isEmpty()) {
-	        System.out.println("No books found.");
-	    } else {
-	        System.out.println("Matching books:");
-	        for (Book b : books) {
-	            System.out.println(b);
-	        }
-	    }
+	    if (book == null) {
+	    	System.out.println("Book not found.");
+			pause();
+			return;
+		} 
+	    System.out.println("Book found:");
+		System.out.println(book);
 	    pause();
 	}
 	
@@ -345,7 +367,7 @@ public class Interface {
 
 	    String keyword = sc.nextLine();
 
-	    ArrayList<Book> books = library.searchBookByKeyword(keyword);
+	    ArrayList<Book> books = library.searchBookByTitle(keyword);
 
 	    if (books == null || books.isEmpty()) {
 	        System.out.println("No matching books found.");
@@ -391,7 +413,7 @@ public class Interface {
 	        return;
 	    }
 
-	    boolean result = user.addBook(book);
+	    boolean result = library.checkoutBook(user, book); 
 
 	    if (result) {
 	        System.out.println("Checkout successful!");
@@ -418,6 +440,7 @@ public class Interface {
 
 	    if (user == null) {
 	        System.out.println("Invalid Student ID.");
+	        pause();
 	        return;
 	    }
 	    
@@ -429,6 +452,7 @@ public class Interface {
 
 	    if (book == null) {
 	        System.out.println("Invalid ISBN.");
+	        pause();
 	        return;
 	    }
 

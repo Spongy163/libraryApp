@@ -13,14 +13,12 @@ public class LibraryApp {
 	
 	
 	public static void main(String[] args) throws IOException {
-		String booksFilename = "Bookinfo.dat";
+		String booksFilename = "BookInfo.dat";
 		String usersFilename = "StudentInfo.dat";
 		
 		Library library = new Library(booksFilename, usersFilename);
 		Interface libraryInterface = new Interface(library);
 		
-		libraryInterface.testCheckoutBook();
-		libraryInterface.testAddBorrowedBooks();
 		libraryInterface.start();
 		
 		

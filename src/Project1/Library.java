@@ -52,7 +52,7 @@ public class Library {
 	 * @param keyword
 	 * @return an ArrayList<Book> of all matching books.
 	 */
-	public ArrayList<Book> searchBookByKeyword(String keyword) {
+	public ArrayList<Book> searchBookByTitle(String keyword) {
 		return database.findBooksWithKeyword(keyword);
 	}
 	
@@ -62,7 +62,7 @@ public class Library {
 	 * @param title
 	 * @return
 	 */
-	public Book searchBookByTitle(String title) {
+	public Book searchBookByFullTitle(String title) {
 		return database.findBookByTitle(title);
 	}
 
@@ -74,7 +74,7 @@ public class Library {
 	 * @param book
 	 * @return boolean : check out result
 	 */
-	public boolean checkOutBook(StudentUser user, Book book) {
+	public boolean checkoutBook(StudentUser user, Book book) {
 		
 
 		/* Checks if the book and user are null
@@ -86,8 +86,11 @@ public class Library {
 			return false;
 		}
 		
-		return user.addBook(book);
-		
+		boolean result = user.addBook(book);
+		if(result) {
+			database.addCheckoutLog(book, user);
+		}
+		return result;
 	}
 	
 	/**
@@ -109,7 +112,12 @@ public class Library {
 			return false;
 		}
 		
-		return user.removeBook(book);
+		boolean result = user.removeBook(book);
+		if(result) {
+			database.addReturnLog(book, user);
+		}
+		
+		return result;
 		
 	}
 	
@@ -129,10 +137,20 @@ public class Library {
 		return null;
 	}
 	
+	/**
+	 * calls database findUserById method
+	 * 
+	 * @param user
+	 * @return
+	 */
 	public StudentUser findUserByID(String user) {
 		return database.findUserById(user);
 	}
 	
+	/**
+	 * Calls database for an array of overdue books
+	 * prints out the array
+	 */
 	public void printOverdueBooks() {
 		ArrayList<Book> overdue = database.findOverdueBooks();
 		System.out.println("Over due books: ");
@@ -158,4 +176,17 @@ public class Library {
 		System.out.println("===========================================");
 	}
 	
+	/**
+	 * 
+	 */
+	public ArrayList<LogEntry> returnAnalytics() {
+		return database.returnAnalytics();
+	}
+	
+	/**
+	 * Calls database to print a summary
+	 */
+	public void printDatabaseSummary() {
+		database.printSummary();
+	}
 }

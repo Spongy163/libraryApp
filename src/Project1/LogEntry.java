@@ -25,7 +25,7 @@ public final class LogEntry {
 	private final String action;
 	private final String title;
 	private final String userName;
-	private final LocalDateTime timeStamp;
+	private final LocalDateTime timestamp;
 	
 	
 	/**CONSTRUCTOR
@@ -41,25 +41,7 @@ public final class LogEntry {
 		this.action = action;
 		this.title = title;
 		this.userName = userName;
-		this.timeStamp = LocalDateTime.now();
-		entryCount++;
-	}
-	
-	/**CONSTRUCTOR
-	 * Initializes LogEntry object
-	 * This Constructor is for loading saved logEntries
-	 * Accepts and sets action, title, userName, and timeStamp
-	 * 
-	 * @param action sets action to "CHECKOUT" or "RETURN"
-	 * @param title sets title from book
-	 * @param userName sets userName from StudentUser
-	 * @param timeStamp 
-	 */
-	public LogEntry(String action, String title, String userName, String timeStamp) {
-		this.action = action;
-		this.title = title;
-		this.userName = userName;
-		this.timeStamp = LocalDateTime.parse(timeStamp);
+		this.timestamp = LocalDateTime.now();
 		entryCount++;
 	}
 
@@ -103,7 +85,7 @@ public final class LogEntry {
 	 * @return the timeStamp
 	 */
 	public LocalDateTime getTimeStamp() {
-		return timeStamp;
+		return timestamp;
 	}
 
 	/**
@@ -111,8 +93,7 @@ public final class LogEntry {
 	 */
 	@Override
 	public String toString() {
-		return "LogEntry [action=" + action + ", title=" + title + ", userName=" + userName + ", timeStamp=" + timeStamp
-				+ "]";
+		return "\n [" + action + "||"+ title +"||" + userName + "]"; //\n for data analytic formating
 	}
 	
 	

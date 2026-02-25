@@ -37,7 +37,6 @@ public class Book {
 	public Book(String title, String isbn) {
 		this.title = title;
 		this.isbn = isbn;
-		dueDate = LocalDate.now().plusMonths(1);
 		bookCount ++;
 	}
 	
@@ -66,7 +65,7 @@ public class Book {
 		return isbn;
 	}
 	
-	/**getIsbnAsInt()
+	/**getIsbnAsLong()
 	 * returns only the number portion of the isbn as an int
 	 * 
 	 * @return isbnAsInt : int
@@ -150,6 +149,7 @@ public class Book {
 	public boolean checkOut() {
 		if (!isCheckedOut) {
 			isCheckedOut = true;
+			dueDate = LocalDate.now().plusDays(30);
 			return true;
 		}
 		return false;
@@ -162,6 +162,7 @@ public class Book {
 	 */
 	public boolean returnBook() {
 		if (isCheckedOut) {
+			dueDate = null;
 			isCheckedOut = false;
 			return true;
 		}

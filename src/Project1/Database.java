@@ -138,7 +138,7 @@ public class Database {
 	 * @param user
 	 */
 	public void addCheckoutLog(Book book, StudentUser user) {
-		LogEntry data = new LogEntry(book.getTitle(), user.getName(), "CHECKOUT");
+		LogEntry data = new LogEntry("CHECKOUT", book.getTitle(), user.getName());
 		transactionLog.add(data);
 	}
 	
@@ -149,7 +149,7 @@ public class Database {
 	 * @param user
 	 */
 	public void addReturnLog(Book book, StudentUser user) {
-		LogEntry data = new LogEntry(book.getTitle(), user.getName(), "RETURN");
+		LogEntry data = new LogEntry("RETURN", book.getTitle(), user.getName());
 		transactionLog.add(data);
 	}
 	
@@ -418,6 +418,21 @@ public class Database {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * returns data transaction logs
+	 * 
+	 * @return analytics
+	 */
+	public ArrayList<LogEntry> returnAnalytics() {
+		ArrayList<LogEntry> analytics = new ArrayList<>();
+		
+		for (LogEntry data : transactionLog) {
+			analytics.add(data);
+		}
+		
+		return analytics;
 	}
 	
 	@Override
