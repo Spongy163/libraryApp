@@ -28,8 +28,8 @@ public class Interface {
 	}
 	
 	/**
-	 * prompts the user to enter a valid input and returns that value
-	 * prompts between 1 and an accepted max (inclusive)
+	 * prompts the user to enter a valid input and returns that value, 
+	 * prompts between 1 and an accepted max (inclusive), 
 	 * returns -1 if invalid max
 	 * 
 	 * @param max
@@ -88,6 +88,53 @@ public class Interface {
 		System.out.println("Exiting...");
 	}
 	
+	/**
+	 * Prints a Library menu show casing different features of the library app.
+	 */
+	public void printMenu() { 
+		System.out.println("======== LIBRARY Menu ========");
+		System.out.println("[1] Search book");
+		System.out.println("[2] Checkout book");
+		System.out.println("[3] Return book");
+		System.out.println("[4] Display borrowed books");
+		System.out.println("[5] Check overdue books");
+		System.out.println("[6] Return");
+		System.out.println("=============================");
+		
+		switch (promptValidInput(6)) {
+		case 1:
+			//searchBook();
+		case 2:
+			//checkoutBook();
+		case 3:
+			//returnBook();
+		case 4:
+			//displayBorrowedBooks();
+		case 5:
+			//checkOverdueBooks();
+		case 6:
+			return;
+		}	
+	}
+	
+	public void searchBook() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("======== LIBRARY Search ========");
+		System.out.println("[1] Search book by ISBN");
+		System.out.println("[2] Search book by Title");
+		System.out.println("[3] Search books by keyword");
+		
+		
+		switch (promptValidInput(3)) {
+		case 1:
+			System.out.print("Provide ISBN: ");
+			library.searchBookByISBN(sc.next());
+		case 2:
+			//checkoutBook();
+		case 3:
+			//returnBook();
+		}
+	}
 	
 	
 }

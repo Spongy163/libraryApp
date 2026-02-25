@@ -19,7 +19,10 @@ public class Database {
 	 * -transactionLog:ArrayList<LogEntry> = Stores all library transaction records
 	 */
 	
-	private ArrayList<Book> books;
+	//Arrays
+	private ArrayList<Book> books; //sorted isbn
+	private ArrayList<Book> booksSortedTitle;
+	
 	private ArrayList<StudentUser> users;
 	private ArrayList<LogEntry> transactionLog;
 	
@@ -43,6 +46,46 @@ public class Database {
 	 * +addReturnLog(book:Book, user:StudentUser) = Add a return log (LogEntry) to the transaction log list.
 	 */
 	
+	
+	private void addIsbnSortedBook(Book book) {
+		//checks if the books list is empty
+				if (books.isEmpty()) {
+					books.add(book);
+					return;
+				}
+				
+				//reverse insert algorithm
+				for(int i = books.size() - 1; i >= 0; i--) {
+					if(books.get(i).getIsbnAsInt() > book.getIsbnAsInt()) {
+						books.add(i + 1, book);
+						return;
+					}
+				}
+				
+				//if the book isbn is smaller than all of the other books isbns it will be first
+				books.add(0, book);
+	}
+	
+	private void addTitleSortedBook(Book book) {
+		//Checks if the books list is empty
+			if(booksSortedTitle.isEmpty()) {
+				booksSortedTitle.add(book);
+				return;
+			}
+			
+			//reverse insert algorithm
+			for(int i = booksSortedTitle.size(); i >= 0; i--) {
+				if(book.getTitle().compareTo(booksSortedTitle.get(i).getTitle()) >= 0) {
+					booksSortedTitle.add(i + 1, book);
+					return;
+				}
+			}
+			
+			//if the book title is first in alphabetical order
+			booksSortedTitle.add(0, book);
+	}
+	
+	
 	/**
 	 * adds a Book to books in order of isbn number (smallest to greatest) by reverse insertion sort
 	 * Time complexity: max: o(n)
@@ -50,23 +93,8 @@ public class Database {
 	 * @param book : Book, the book to be added
 	 */
 	public void addBook(Book book) {
-		
-		//checks if the books list is empty
-		if (books.isEmpty()) {
-			books.add(book);
-			return;
-		}
-		
-		//reverse insert algorithm
-		for(int i = books.size() - 1; i >= 0; i--) {
-			if(books.get(i).getIsbnAsInt() > book.getIsbnAsInt()) {
-				books.add(i + 1, book);
-				return;
-			}
-		}
-		
-		//if the book isbn is smaller than all of the other books isbns it will be first
-		books.add(0, book);
+		addIsbnSortedBook(book);
+		addTitleSortedBook(book);
 	}
 	
 	/**
