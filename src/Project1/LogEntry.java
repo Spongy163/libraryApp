@@ -8,24 +8,24 @@ package Project1;
 
 import java.time.LocalDateTime;
 
-public class LogEntry {
+public final class LogEntry {
 	/* STATIC FIELDS
 	 * entryCount:int = tracks the amount of log entries created. Useful for data analytics
 	 */
 	
 	private static int entryCount = 0;
 	
-	/* INSTANCE FIELDS
+	/* IMMUTABLE INSTANCE FIELDS
 	 * -action:String = Stores the type of transaction: "CHECKOUT" or "RETURN"
 	 * -title:String = Stores the book title
 	 * -userName:String = Stores the student's name
 	 * -timeStamp:LocalDateTime = stores the current date and time of the transaction
 	 */
 	
-	private String action;
-	private String title;
-	private String userName;
-	private LocalDateTime timeStamp;
+	private final String action;
+	private final String title;
+	private final String userName;
+	private final LocalDateTime timeStamp;
 	
 	
 	/**CONSTRUCTOR
