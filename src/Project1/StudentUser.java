@@ -57,12 +57,9 @@ public class StudentUser {
 	 * @param name sets user name
 	 * @param major sets user major
 	 */
-	public StudentUser(String userID, String name, String major) {
-		this.userID = userID;
-		this.name = name;
+	public StudentUser(String userId, String name, String major) {
+		this(userId, name);
 		this.major = major;
-		this.checkedOutBooks = new ArrayList<>();
-		userCount++;
 	}
 
 	//GETTER and SETTER methods
@@ -238,4 +235,6 @@ public class StudentUser {
 	public String toString() {
 		return "User [userID=" + userID + ", checkedOutBooks=" + checkedOutBooks + "]";
 	}
+
+	
 }

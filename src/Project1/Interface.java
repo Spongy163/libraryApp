@@ -8,6 +8,7 @@
 package Project1;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Interface {
@@ -16,6 +17,7 @@ public class Interface {
 	 */
 	
 	private Library library;
+	private Scanner sc;
 	
 	/**
 	 * CONSTRUCTOR
@@ -25,6 +27,16 @@ public class Interface {
 	 */
 	public Interface(Library library) {
 		this.library = library;
+		sc = new Scanner(System.in);
+	}
+	
+	/**
+	 * pauses to allow user to see the information before it returning
+	 */
+	private void pause() {
+		System.out.println();
+		System.out.println("Press Enter to continue...");
+		sc.nextLine();
 	}
 	
 	/**
@@ -37,7 +49,6 @@ public class Interface {
 	 */
 	private int promptValidInput(int max) {
 		int input = -1;
-		Scanner sc = new Scanner(System.in);
 		
 		if (max < 0) {
 			return input;
@@ -46,6 +57,7 @@ public class Interface {
 		do {
 			System.out.println("Enter choice: ");
 			input = sc.nextInt();
+			sc.nextLine();
 			if (input <= 0 || input > max) {
 				System.out.println("Invalid input, Must be a number between 1 and " + max);
 				System.out.println("Try Again");
@@ -69,24 +81,146 @@ public class Interface {
 			System.out.println("======== LIBRARY APP ========");
 			System.out.println("[1] menu");
 			System.out.println("[2] credits");
-			System.out.println("[3] save and exit");
+			System.out.println("[3] exit");
 			System.out.println("=============================");
 			
 			switch (promptValidInput(3)) {
 				case 1:
-					//printMenu()
+					printMenu();
+					break;
 				case 2:
-					//showCredits()
+					showCredits();
+					break;
 				case 3:
 					continueLoop = false;
+					break;
 			}
 		} while (continueLoop);
 		
-		System.out.println("Saving Database");
-		library.saveDatabase();
-		System.out.println("Database saved");
 		System.out.println("Exiting...");
+		System.out.println("Have a good night!");
+		System.out.println("[Program terminated]");
 	}
+	
+	/**
+	 * Displays program credits
+	 */
+	public void showCredits() {
+
+		System.out.println("======== CREDITS ========");
+		System.out.println("Library Book Checkout System");
+		System.out.println();
+		System.out.println("Created by: Brighton Drill");
+		System.out.println("Inspired by: Dr. Kim");
+		System.out.println();
+		System.out.println("CS16100 - Introduction to Computer Science II");
+		System.out.println("=========================");
+		
+		pause();
+	}
+	
+	
+	/**
+	 * TEST METHOD
+	 * Automatically checks out several books to a user so the
+	 * displayUserBorrowedBooks() feature can be tested quickly.
+	 */
+	public void test_addBorrowedBooks() {
+
+		System.out.println("======== TEST: Adding Borrowed Books ========");
+
+		String userId = "ID-48206";
+		StudentUser user = library.findUserByID(userId);
+
+		if (user == null) {
+			System.out.println("Test failed: user not found.");
+			return;
+		}
+
+		String[] testIsbns = {
+				"ISBN-9781942788331",
+				"ISBN-9780136042594",
+				"ISBN-9781491924464"
+		};
+		for (String isbn : testIsbns) {
+
+			Book book = library.searchBookByISBN(isbn);
+
+			if (book == null) {
+				System.out.println(isbn + " -> Book not found");
+				continue;
+			}
+
+			boolean result = library.checkOutBook(user, book);
+
+			if (result)
+				System.out.println(isbn + " -> Checkout successful");
+			else
+				System.out.println(isbn + " -> Checkout failed (already checked out?)");
+		}
+
+		System.out.println("=============================================");
+	}
+
+		/**
+		 * Helper method that performs a single checkout test
+		 */
+		private void runCheckoutTest(String userId, String isbn) {
+
+			StudentUser user = library.findUserByID(userId);
+			Book book = library.searchBookByISBN(isbn);
+
+			boolean result = library.checkOutBook(user, book);
+
+			System.out.print("User=" + userId + "  ISBN=" + isbn + " -> ");
+
+			System.out.println(result);
+		}
+		
+		/**
+		 * Automated checkout test based on assignment example.
+		 * Converts IDs to objects using the real system before calling checkout.
+		 */
+		public void test_checkoutBook() {
+
+			System.out.println("======== TEST CHECKOUT ========");
+
+			runCheckoutTest("ID-74932", "ISBN-9780134685991");
+			System.out.println("Expected result: true");
+			System.out.println();
+
+			runCheckoutTest("ID-74932", "ISBN-9780321349606");
+			System.out.println("Expected result: true");
+			System.out.println();
+
+			runCheckoutTest("ID-71038", "ISBN-9780321637734");
+			System.out.println("Expected result: true");
+			System.out.println();
+
+			runCheckoutTest("ID-71038", "ISBN-9781107077232");
+			System.out.println("Expected result: true");
+			System.out.println();
+
+			runCheckoutTest("ID-AAA73", "ISBN-9781491924464");
+			System.out.println("Expected result: false");
+			System.out.println();
+
+			runCheckoutTest("ID-74932", "ISBN-9781491924AAA");
+			System.out.println("Expected result: false");
+			System.out.println();
+
+			runCheckoutTest("ID-74932", "ISBN-9780134685991");
+			System.out.println("Expected result: false");
+			System.out.println();
+
+			runCheckoutTest("ID-74932", "ISBN-9781107077232");
+			System.out.println("Expected result: false");
+			System.out.println();
+
+			System.out.println("================================");
+		}
+
+		
 	
 	/**
 	 * Prints a Library menu show casing different features of the library app.
@@ -103,38 +237,255 @@ public class Interface {
 		
 		switch (promptValidInput(6)) {
 		case 1:
-			//searchBook();
+			searchBook();
+			break;
 		case 2:
-			//checkoutBook();
+			checkOut();
+			break;
 		case 3:
-			//returnBook();
+			returnBook();
+			break;
 		case 4:
-			//displayBorrowedBooks();
+			displayUserBorrowedBooks();
+			break;
 		case 5:
-			//checkOverdueBooks();
+			checkOverdueBooks();
+			break;
 		case 6:
 			return;
 		}	
 	}
 	
+	//SEARCH BOOK
+	
+	/**
+	 * Allows the user to search for a book
+	 */
 	public void searchBook() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("======== LIBRARY Search ========");
-		System.out.println("[1] Search book by ISBN");
-		System.out.println("[2] Search book by Title");
-		System.out.println("[3] Search books by keyword");
-		
-		
-		switch (promptValidInput(3)) {
-		case 1:
-			System.out.print("Provide ISBN: ");
-			library.searchBookByISBN(sc.next());
-		case 2:
-			//checkoutBook();
-		case 3:
-			//returnBook();
-		}
+
+	    System.out.println("======== LIBRARY Search ========");
+	    System.out.println("[1] Search book by ISBN");
+	    System.out.println("[2] Search book by Title");
+	    System.out.println("[3] Search books by Keyword");
+
+	    switch (promptValidInput(3)) {
+
+	        case 1:
+	            searchByISBN();
+	            break;
+
+	        case 2:
+	            searchByTitle();
+	            break;
+
+	        case 3:
+	            searchByKeyword();
+	            break;
+	    }
 	}
+	
+	public void searchByISBN() {
+	
+
+		System.out.println("===[Search by ISBN selected]===");
+		System.out.print("Enter book ISBN: ");
+
+		String isbn = sc.nextLine();
+
+		Book book = library.searchBookByISBN(isbn);
+
+		if (book == null) {
+			System.out.println("Book not found.");
+			pause();
+			return;
+		} 
+		System.out.println("Book found:");
+		System.out.println(book);
+		pause();
+		   
+	}
+	
+	public void searchByTitle() {
+	
+
+	    System.out.println("===[Search by Title selected]===");
+	    System.out.print("Enter full book title: ");
+
+	    String title = sc.nextLine();
+
+	    ArrayList<Book> books = library.searchBookByTitle(title);
+
+	    if (books == null || books.isEmpty()) {
+	        System.out.println("No books found.");
+	    } else {
+	        System.out.println("Matching books:");
+	        for (Book b : books) {
+	            System.out.println(b);
+	        }
+	    }
+	    pause();
+	}
+	
+	public void searchByKeyword() {
+	
+		
+	    System.out.println("===[Search by Keyword selected]===");
+	    System.out.print("Enter keyword: ");
+
+	    String keyword = sc.nextLine();
+
+	    ArrayList<Book> books = library.searchBookByTitle(keyword);
+
+	    if (books == null || books.isEmpty()) {
+	        System.out.println("No matching books found.");
+	    } else {
+	        System.out.println("Matching books:");
+	        for (Book b : books) {
+	            System.out.println(b);
+	        }
+	    }
+	    pause();
+	}
+	
+	//CHECKOUT
+	
+	public void checkOut() {
+
+	    System.out.println("===[Checkout Book selected]===");
+	    
+	    System.out.println("Format ID-1234567 (case insensitive)");
+	    System.out.print("Enter Student ID: ");
+	    String userId = sc.nextLine();
+
+	    StudentUser user = library.findUserByID(userId);
+
+	    if (user == null) {
+	        System.out.println("Invalid Student ID.");
+	        return;
+	    }
+
+	    System.out.println("Format ISBN-123456 (case insensitive)");
+	    System.out.print("Enter Book ISBN: ");
+	    String isbn = sc.nextLine();
+
+	    Book book = library.searchBookByISBN(isbn);
+
+	    if (book == null) {
+	        System.out.println("Invalid ISBN.");
+	        return;
+	    }
+
+	    boolean result = user.addBook(book);
+
+	    if (result) {
+	        System.out.println("Checkout successful!");
+	    } else {
+	        System.out.println("Checkout failed. Book may already be checked out.");
+	    }
+	    pause();
+	}
+	
+	//RETURN
+	
+	public void returnBook() {
+
+	    System.out.println("===[Return Book selected]===");
+
+	    System.out.println("Format ID-1234567 (case insensitive)");
+	    System.out.print("Enter Student ID: ");
+	    String userId = sc.nextLine();
+
+	    StudentUser user = library.findUserByID(userId);
+
+	    if (user == null) {
+	        System.out.println("Invalid Student ID.");
+	        return;
+	    }
+	    
+	    System.out.println("Format ISBN-123456 (case insensitive)");
+	    System.out.print("Enter Book ISBN: ");
+	    String isbn = sc.nextLine();
+
+	    Book book = library.searchBookByISBN(isbn);
+
+	    if (book == null) {
+	        System.out.println("Invalid ISBN.");
+	        return;
+	    }
+
+	    boolean result = library.returnBook(user, book);
+
+	    if (result) {
+	        System.out.println("Return successful!");
+	    } else {
+	        System.out.println("Return failed. User may not have this book.");
+	    }
+	    pause();
+	}
+	
+	//BORROWED BOOKS
+	
+	//DISPLAY BORROWED BOOKS
+
+	/**
+	 * Prompts the user for a student ID and prints all books currently
+	 * borrowed by that student to standard output.
+	 */
+	public void displayUserBorrowedBooks() {
+
+		System.out.println("======== DISPLAY USER BORROWED BOOKS ========");
+
+		System.out.println("Format ID-1234567 (case insensitive)");
+		System.out.print("Enter Student ID: ");
+		String userId = sc.nextLine();
+
+		StudentUser user = library.findUserByID(userId);
+
+		if (user == null) {
+			System.out.println("Invalid Student ID.");
+			return;
+		}
+
+		ArrayList<Book> borrowed = user.getCheckedOutBooks();
+
+		System.out.println("==============================================");
+		System.out.println("User: " + user.getUserID() + "  Name: " + user.getName());
+		System.out.println("==============================================");
+
+		if (borrowed == null || borrowed.isEmpty()) {
+			System.out.println("No books currently checked out.");
+			System.out.println("==============================================");
+			return;
+		}
+
+		for (Book book : borrowed) {
+			System.out.println(book); // uses Book.toString()
+		}
+
+		System.out.println("==============================================");
+		System.out.println("Total checked out: " + borrowed.size());
+		System.out.println("==============================================");
+		pause();
+	}
+
+	//OVERDUE BOOKS
+
+	/**
+	 * Executes the "Show Overdue Books" operation.
+	 * Prints all overdue books to standard output.
+	 */
+	public void checkOverdueBooks() {
+
+		System.out.println("======== CHECK OVERDUE BOOKS ========");
+
+		library.printOverdueBooks();
+
+		System.out.println("=====================================");
+		pause();
+	}
+	
+	
+	
 	
 	
 }

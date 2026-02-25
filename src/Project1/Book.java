@@ -37,6 +37,7 @@ public class Book {
 	public Book(String title, String isbn) {
 		this.title = title;
 		this.isbn = isbn;
+		dueDate = LocalDate.now().plusMonths(1);
 		bookCount ++;
 	}
 	
@@ -70,8 +71,8 @@ public class Book {
 	 * 
 	 * @return isbnAsInt : int
 	 */
-	public int getIsbnAsInt() {
-		int isbnAsInt = Integer.parseInt(isbn.substring(isbn.indexOf('-') + 1));
+	public long getIsbnAsLong() {
+		long isbnAsInt = Long.parseLong(isbn.substring(isbn.indexOf('-') + 1));
 		return isbnAsInt;
 	}
 
@@ -173,7 +174,10 @@ public class Book {
 	 * @return boolean book is overdue
 	 */
 	public boolean isOverdue() {
-		if(dueDate.isAfter(LocalDate.now())){
+		if (dueDate == null) {
+			return false;
+		}
+		if(LocalDate.now().isAfter(dueDate)) {
 			return true;
 		}
 		return false;
@@ -193,6 +197,6 @@ public class Book {
 	 */
 	@Override
 	public String toString() {
-		return title + " " + isbn + " DueDate: " + dueDate + " Checked out:" + isCheckedOut;
+		return title + " " + isbn + " Checkedout: " + isCheckedOut + " DueDate: " + dueDate ;
 	}
 }

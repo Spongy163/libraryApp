@@ -66,7 +66,7 @@ public class Database {
 				
 				//reverse insert algorithm
 				for(int i = books.size() - 1; i >= 0; i--) {
-					if(books.get(i).getIsbnAsInt() > book.getIsbnAsInt()) {
+					if(books.get(i).getIsbnAsLong() <= book.getIsbnAsLong()) {
 						books.add(i + 1, book);
 						return;
 					}
@@ -84,7 +84,7 @@ public class Database {
 			}
 			
 			//reverse insert algorithm
-			for(int i = booksST.size(); i >= 0; i--) {
+			for(int i = booksST.size() - 1; i >= 0; i--) {
 				if(book.getTitle().compareTo(booksST.get(i).getTitle()) >= 0) {
 					booksST.add(i + 1, book);
 					return;
@@ -120,7 +120,7 @@ public class Database {
 		
 		//reverse insert algorithm
 		for(int i = users.size() - 1; i >= 0; i--) {
-			if(users.get(i).getUserIDAsInt() > user.getUserIDAsInt()) {
+			if(users.get(i).getUserIDAsInt() <= user.getUserIDAsInt()) {
 				users.add(i + 1, user);
 				return;
 			}
@@ -137,7 +137,7 @@ public class Database {
 	 * @param book
 	 * @param user
 	 */
-	public void addCheckOutLog(Book book, StudentUser user) {
+	public void addCheckoutLog(Book book, StudentUser user) {
 		LogEntry data = new LogEntry(book.getTitle(), user.getName(), "CHECKOUT");
 		transactionLog.add(data);
 	}
@@ -185,7 +185,7 @@ public class Database {
 	/**
 	 * Loads books from a file in isbn number order using a reverse insertion sort (defined in addBook)
 	 * When loading the first file:
-	 * Time complexity for unsorted list: min: o(n) + 1 max: o(n^2) 
+	 * Time complexity for unsorted list: min: o(n) max: o(n^2) 
 	 * Time complexity for a sorted list: o(n) (ie. from save file)
 	 * 
 	 * Advantage: Allows faster searching using binary search
@@ -208,6 +208,8 @@ public class Database {
 			addBook(book);
 			
 		}
+		fileReader.close();
+		
 	}
 	
 	/**
@@ -232,51 +234,64 @@ public class Database {
 	    	addUser(user);
 	    	
 	    }
+	    
+	    fileReader.close();
 	}
 	
-	public void loadTransactionLogFromSaveFile(String filename) throws IOException {
-		File transactionStorage = new File(filename);
-		int lineCount = countFileLines(transactionStorage);
-		
-		Scanner fileReader = new Scanner(transactionStorage);
-		for(int i = 0; i < lineCount; i++) {
-			LogEntry entry;
-			String[] split = fileReader.nextLine().trim().split(" ");
-			
-			entry = new LogEntry(split[0], split[1], split[2], split[3]);
-			transactionLog.add(entry);
-		}
-		
-	}
+	
 	
 	/**
 	 * Uses a binary search algorithm to return a book by ISBN
-	 * Converts ISBN to an int for comparisons 
+	 * Converts ISBN to an long for comparisons 
 	 * comparisons are not determined by case but by '-' location
+	 * Will return null if there is no '-'
 	 * Time complexity o(log n) 
 	 * 
 	 * @param isbn : String the ISBN to be found
 	 */
 	public Book findBookByISBN(String isbn) {
-	
-		int key = Integer.parseInt(isbn.substring(isbn.indexOf('-') + 1));
+
+		if (isbn == null || !isbn.contains("-")) {
+			return null;
+		}
+
+		long key;
+
+		try {
+			key = Long.parseLong(isbn.substring(isbn.indexOf('-') + 1));
+		}
+		catch (NumberFormatException e) {
+			// Invalid ISBN format
+			return null;
+		}
+
 		int min = 0;
 		int max = books.size() - 1;
-		int mid = (max + min) / 2; //initialized to prevent syntax error "mid may not have been initialized" 
-		
+		int mid;
+
 		while (min <= max) {
 			mid = (min + max) / 2;
-			int midISBN = books.get(mid).getIsbnAsInt();
-			if(midISBN == key) {
+			long midISBN = books.get(mid).getIsbnAsLong();
+
+			//System.out.println(mid);
+			//System.out.println("midISBN " + midISBN);
+			//System.out.println("key " + key);
+			//System.out.println();
+
+			if (midISBN == key) {
 				return books.get(mid);
-			} else if (midISBN > key){
+			}
+			else if (midISBN > key) {
 				max = mid - 1;
-			} else if (midISBN < key) {
+			}
+			else {
 				min = mid + 1;
 			}
 		}
+
 		return null;
 	}
+	
 	
 	/**
 	 * 
@@ -310,24 +325,40 @@ public class Database {
 	 * @return StudentUser = null if not found in users
 	 */
 	public StudentUser findUserById(String userID) {
-		
-		int key = Integer.parseInt(userID.substring(userID.indexOf('-') + 1));
+
+		if (userID == null || !userID.contains("-")) {
+			return null;
+		}
+
+		int key;
+
+		try {
+			key = Integer.parseInt(userID.substring(userID.indexOf('-') + 1));
+		}
+		catch (NumberFormatException | StringIndexOutOfBoundsException e) {
+			// Invalid ID format
+			return null;
+		}
+
 		int min = 0;
 		int max = users.size() - 1;
-		int mid = (max + min) / 2;
-		
+		int mid;
+
 		while (min <= max) {
-			mid = (max + min) / 2;
+			mid = (min + max) / 2;
 			int midUserID = users.get(mid).getUserIDAsInt();
-			if(midUserID == key) {
+
+			if (midUserID == key) {
 				return users.get(mid);
-			} else if (midUserID > key) {
+			}
+			else if (midUserID > key) {
 				max = mid - 1;
-			} else if (midUserID < key) {
+			}
+			else {
 				min = mid + 1;
 			}
 		}
-		
+
 		return null;
 	}
 	
@@ -346,45 +377,19 @@ public class Database {
 		}
 		
 		if(overdueBooks.size() > 0) {
-		return null;
+			return overdueBooks;
 		}
 		
-		return overdueBooks;
+		return null;
 	}
 	
-	/** 
-	 * Saves the current userIDs, Books, and transaction logs to seperate files for long term storage
-	 * Keeps the data in sorted order for faster boot times
-	 * only one save available 
-	 * replaces old save
-	 */
-	public void saveData() throws IOException {
-		PrintWriter bookSave = new PrintWriter("bookStorage");
-		PrintWriter userSave = new PrintWriter("userStorage");
-		PrintWriter transactionSave = new PrintWriter("transactionStorage");
-		
-		for(Book book : books) {
-			bookSave.println(book.getTitle() + ' ' + book.getIsbnAsInt());
-		}
-		for(StudentUser user : users) {
-			userSave.println(user.getUserID() + ' ' + user.getName() + ' ' + user.getMajor());
-		}
-		for(LogEntry entry : transactionLog) {
-			transactionSave.println(entry.getAction() + ' ' + entry.getTitle() + ' ' + entry.getUserName() + ' ' + entry.getTimeStamp());
-		}
-		
-		bookSave.close();
-		userSave.close();
-		transactionSave.close();
-	}
-
 	@Override
 	public String toString() {
-		return "--- Database System Summary ---\n" +
+		return "=== Database System Summary ===\n" +
 				"Total Books: " + books.size() + "\n" +
 				"Total StudentUsers: " + users.size() + "\n" +
-				"Total Transactions" + transactionLog.size() + "\n" +
-				"------------------------------\n";
+				"Total Transactions: " + transactionLog.size() + "\n" +
+				"==============================\n";
 	}
 	
 	public void printSummary() {

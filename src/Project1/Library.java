@@ -33,21 +33,6 @@ public class Library {
 		this.database.loadStudentUsersFromFile(studentsFilename); 
 	}
 	
-	/**
-	 * CONSTRUCTOR
-	 * load from sorted save files constructor
-	 * 
-	 * @param booksFilename
-	 * @param studentsFilename
-	 * @param transactionsFilename
-	 * @throws IOException
-	 */
-	public Library(String booksFilename, String studentsFilename, String transactionsFilename) throws IOException {
-		this.database = new Database();
-		this.database.loadBooksFromFile(booksFilename);
-		this.database.loadStudentUsersFromFile(studentsFilename); 
-		this.database.loadTransactionLogFromSaveFile(transactionsFilename);
-	}
 	
 	//METHODS
 	
@@ -133,31 +118,33 @@ public class Library {
 		return null;
 	}
 	
+	public StudentUser findUserByID(String user) {
+		return database.findUserById(user);
+	}
+	
 	public void printOverdueBooks() {
 		ArrayList<Book> overdue = database.findOverdueBooks();
-		System.out.println("      ---Over due books---");
+		System.out.println("Over due books: ");
 		
+		if(overdue == null) {
+			System.out.println();
+			System.out.print("There are no over due books!");
+			System.out.println();
+			return;
+		}
 		
 		if (overdue.isEmpty()) {
 			System.out.println();
 			System.out.print("There are no over due books!");
 			System.out.println();
+			return;
 		}
 		
 		for (Book book : overdue) {
 			System.out.println(book);
 		}
 		
-		System.out.println("------------------------------------------");
+		System.out.println("===========================================");
 	}
 	
-	
-	/**
-	 * tells database to save its data
-	 * 
-	 * @throws IOException
-	 */
-	public void saveDatabase() throws IOException {
-		database.saveData();
-	}
 }
