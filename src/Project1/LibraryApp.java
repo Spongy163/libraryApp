@@ -19,8 +19,8 @@ public class LibraryApp {
 		Library library = new Library(booksFilename, usersFilename);
 		Interface libraryInterface = new Interface(library);
 		
-		libraryInterface.test_checkoutBook();
-		libraryInterface.test_addBorrowedBooks();
+		libraryInterface.testCheckoutBook();
+		libraryInterface.testAddBorrowedBooks();
 		libraryInterface.start();
 		
 		

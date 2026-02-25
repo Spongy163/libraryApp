@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Interface {
+	
 	/* INSTANCE DATA FIELDS
 	 * -library:Library = a library object the user can interact with
+	 * -sc:Scanner = a scanner that can be used by the whole Interface class
 	 */
 	
 	private Library library;
@@ -21,7 +23,8 @@ public class Interface {
 	
 	/**
 	 * CONSTRUCTOR
-	 * sets the library
+	 * Accepts and sets Library
+	 * Initializes scanner
 	 * 
 	 * @param library
 	 */
@@ -30,8 +33,10 @@ public class Interface {
 		sc = new Scanner(System.in);
 	}
 	
+	//METHODS
+	
 	/**
-	 * pauses to allow user to see the information before it returning
+	 * Pauses loop to allow user to take information in before moving on 
 	 */
 	private void pause() {
 		System.out.println();
@@ -70,8 +75,7 @@ public class Interface {
 	
 	
 	/**
-	 * starts the user interface loop
-	 * saves the data at the end
+	 * Starts the user interface loop
 	 * 
 	 * @throws IOException
 	 */
@@ -103,8 +107,8 @@ public class Interface {
 	}
 	
 	/**
-	 * Displays program credits
-	 */
+	* Displays program credits
+	*/
 	public void showCredits() {
 
 		System.out.println("======== CREDITS ========");
@@ -115,7 +119,7 @@ public class Interface {
 		System.out.println();
 		System.out.println("CS16100 - Introduction to Computer Science II");
 		System.out.println("=========================");
-		
+			
 		pause();
 	}
 	
@@ -124,12 +128,13 @@ public class Interface {
 	 * TEST METHOD
 	 * Automatically checks out several books to a user so the
 	 * displayUserBorrowedBooks() feature can be tested quickly.
+	 * Can test without manually inputing data
 	 */
-	public void test_addBorrowedBooks() {
+	public void testAddBorrowedBooks() {
 
 		System.out.println("======== TEST: Adding Borrowed Books ========");
 
-		String userId = "ID-48206";
+		String userId = "ID-48206"; //known valid id
 		StudentUser user = library.findUserByID(userId);
 
 		if (user == null) {
@@ -137,33 +142,30 @@ public class Interface {
 			return;
 		}
 
-		String[] testIsbns = {
-				"ISBN-9781942788331",
-				"ISBN-9780136042594",
-				"ISBN-9781491924464"
-		};
+		String[] testIsbns = {"ISBN-9781942788331","ISBN-9780136042594","ISBN-9781491924464"}; //known valid isbns
+		
 		for (String isbn : testIsbns) {
 
 			Book book = library.searchBookByISBN(isbn);
 
 			if (book == null) {
-				System.out.println(isbn + " -> Book not found");
+				System.out.println(isbn + " Book not found");
 				continue;
 			}
 
 			boolean result = library.checkOutBook(user, book);
 
 			if (result)
-				System.out.println(isbn + " -> Checkout successful");
+				System.out.println(isbn + " Checkout successful");
 			else
-				System.out.println(isbn + " -> Checkout failed (already checked out?)");
+				System.out.println(isbn + " Checkout failed (already checked out?)");
 		}
 
 		System.out.println("=============================================");
 	}
 
 		/**
-		 * Helper method that performs a single checkout test
+		 * Helper method that performs a single checkout test for testCheckoutBook()
 		 */
 		private void runCheckoutTest(String userId, String isbn) {
 
@@ -178,10 +180,10 @@ public class Interface {
 		}
 		
 		/**
-		 * Automated checkout test based on assignment example.
-		 * Converts IDs to objects using the real system before calling checkout.
+		 * Runs a lot of tests to make sure the library functions correctly. 
+		 * Displays results (in helper method) next to expected results
 		 */
-		public void test_checkoutBook() {
+		public void testCheckoutBook() {
 
 			System.out.println("======== TEST CHECKOUT ========");
 
@@ -259,14 +261,14 @@ public class Interface {
 	//SEARCH BOOK
 	
 	/**
-	 * Allows the user to search for a book
+	 * Asks the user which method they would like to search by
 	 */
 	public void searchBook() {
 
 	    System.out.println("======== LIBRARY Search ========");
 	    System.out.println("[1] Search book by ISBN");
-	    System.out.println("[2] Search book by Title");
-	    System.out.println("[3] Search books by Keyword");
+	    System.out.println("[2] Search book by full title");
+	    System.out.println("[3] Search books by keyword");
 
 	    switch (promptValidInput(3)) {
 
@@ -284,6 +286,9 @@ public class Interface {
 	    }
 	}
 	
+	/**
+	 * Allows the user to search for a book using isbn
+	 */
 	public void searchByISBN() {
 	
 
@@ -305,6 +310,9 @@ public class Interface {
 		   
 	}
 	
+	/**
+	 * Allows the user to search for a book using title
+	 */
 	public void searchByTitle() {
 	
 
@@ -313,7 +321,7 @@ public class Interface {
 
 	    String title = sc.nextLine();
 
-	    ArrayList<Book> books = library.searchBookByTitle(title);
+	    ArrayList<Book> books = library.searchBookByKeyword(title);
 
 	    if (books == null || books.isEmpty()) {
 	        System.out.println("No books found.");
@@ -326,6 +334,9 @@ public class Interface {
 	    pause();
 	}
 	
+	/**
+	 * Allows the user to search for books using a keyword
+	 */
 	public void searchByKeyword() {
 	
 		
@@ -334,7 +345,7 @@ public class Interface {
 
 	    String keyword = sc.nextLine();
 
-	    ArrayList<Book> books = library.searchBookByTitle(keyword);
+	    ArrayList<Book> books = library.searchBookByKeyword(keyword);
 
 	    if (books == null || books.isEmpty()) {
 	        System.out.println("No matching books found.");
@@ -349,6 +360,9 @@ public class Interface {
 	
 	//CHECKOUT
 	
+	/**
+	 * Allows a user to check out a book by providing an ID and the ISBN of the book
+	 */
 	public void checkOut() {
 
 	    System.out.println("===[Checkout Book selected]===");
@@ -361,6 +375,7 @@ public class Interface {
 
 	    if (user == null) {
 	        System.out.println("Invalid Student ID.");
+	        pause();
 	        return;
 	    }
 
@@ -372,6 +387,7 @@ public class Interface {
 
 	    if (book == null) {
 	        System.out.println("Invalid ISBN.");
+	        pause();
 	        return;
 	    }
 
@@ -387,6 +403,9 @@ public class Interface {
 	
 	//RETURN
 	
+	/**
+	 * Allows user to return a book by providing an ID and an ISBN
+	 */
 	public void returnBook() {
 
 	    System.out.println("===[Return Book selected]===");
@@ -443,6 +462,7 @@ public class Interface {
 
 		if (user == null) {
 			System.out.println("Invalid Student ID.");
+			pause();
 			return;
 		}
 
@@ -455,6 +475,7 @@ public class Interface {
 		if (borrowed == null || borrowed.isEmpty()) {
 			System.out.println("No books currently checked out.");
 			System.out.println("==============================================");
+			pause();
 			return;
 		}
 
@@ -471,8 +492,8 @@ public class Interface {
 	//OVERDUE BOOKS
 
 	/**
-	 * Executes the "Show Overdue Books" operation.
-	 * Prints all overdue books to standard output.
+	 * Executes the "Show Overdue Books" operation
+	 * Prints all overdue books to standard output
 	 */
 	public void checkOverdueBooks() {
 

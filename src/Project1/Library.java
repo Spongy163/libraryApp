@@ -52,9 +52,20 @@ public class Library {
 	 * @param keyword
 	 * @return an ArrayList<Book> of all matching books.
 	 */
-	public ArrayList<Book> searchBookByTitle(String keyword) {
+	public ArrayList<Book> searchBookByKeyword(String keyword) {
 		return database.findBooksWithKeyword(keyword);
 	}
+	
+	/**
+	 * calls Database findBooksByTitle(title);
+	 * 
+	 * @param title
+	 * @return
+	 */
+	public Book searchBookByTitle(String title) {
+		return database.findBookByTitle(title);
+	}
+
 	
 	/**
 	 * checks out a book to the user

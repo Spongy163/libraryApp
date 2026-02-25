@@ -292,6 +292,43 @@ public class Database {
 		return null;
 	}
 	
+	/**
+	 * Uses binary search to find the book by title
+	 * 
+	 * @param title
+	 * @return
+	 */
+	public Book findBookByTitle(String title) {
+
+		if (title == null || title.isEmpty()) {
+			return null;
+		}
+
+		String key = title.toLowerCase();
+
+		int min = 0;
+		int max = booksST.size() - 1;
+		int mid;
+
+		while (min <= max) {
+			mid = (min + max) / 2;
+			String midTitle = booksST.get(mid).getTitle().toLowerCase();
+
+			int cmp = midTitle.compareTo(key);
+
+			if (cmp == 0) {
+				return booksST.get(mid);
+			}
+			else if (cmp > 0) {
+				max = mid - 1;
+			}
+			else {
+				min = mid + 1;
+			}
+		}
+
+		return null;
+	}
 	
 	/**
 	 * 
