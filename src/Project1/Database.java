@@ -14,16 +14,16 @@ import java.io.*;
 public class Database {
 
 	/* INSTANCE DATA FIELDS
-	 * -books:ArrayList<Book> = Stores all registered books in the library system. 
+	 * -books:ArrayList<Book> = Stores all registered books in the library system in order of isbn
+	 * -booksST:ArrayList<Book> = books sorted by title
 	 * -users:ArrayList<StudentUser> = Stores all registered users in the library system.
 	 * -transactionLog:ArrayList<LogEntry> = Stores all library transaction records
 	 */
 	
 	//Arrays
 	private ArrayList<Book> books; //sorted isbn
-	private ArrayList<Book> booksSortedTitle;
-	
-	private ArrayList<StudentUser> users;
+	private ArrayList<Book> booksST; //sorted title
+	private ArrayList<StudentUser> users; 
 	private ArrayList<LogEntry> transactionLog;
 	
 	/**
@@ -34,19 +34,29 @@ public class Database {
 	 * @param usersFilename the name of the file storing the users
 	 */
 	public Database() {
-		this.books = new ArrayList<Book>();
-		this.users = new ArrayList<StudentUser>();
-		this.transactionLog = new ArrayList<LogEntry>();
+		this.books = new ArrayList<>();
+		this.booksST = new ArrayList<>();
+		this.users = new ArrayList<>();
+		this.transactionLog = new ArrayList<>();
 	}
 	
 	/* ADD METHODS
-	 * +addBook(book:Book) = Add the provided book to the associated data structure (ArrayList).
-	 * +addUser(user:StudentUser) = Register the provided user to the associated data structure.
+	 * -addIsbnSortedBook(book:Book) = adds a book to books in it's sorted position by isbn
+	 * -addTitleSortedBook(book:Book) = adds a book to booksST in it's sorted position by title
+	 * +addBook(book:Book) = Add the provided book to the associated data structures.
+	 * +addUser(user:StudentUser) = Register the provided user to the list users
 	 * +addCheckoutLog(book:Book, user:StudentUser) = Add a checkout log (LogEntry) to the transaction log list.
 	 * +addReturnLog(book:Book, user:StudentUser) = Add a return log (LogEntry) to the transaction log list.
 	 */
 	
 	
+	/**
+	 * adds a Book to books in order of isbn number (smallest to greatest) using reversed insertion sort
+	 * If a sorted list is being inputed in sorted order to addBook() the time complexity will always be o(1)
+	 * Time complexity: max: o(n)
+	 * 
+	 * @param book
+	 */
 	private void addIsbnSortedBook(Book book) {
 		//checks if the books list is empty
 				if (books.isEmpty()) {
@@ -68,27 +78,26 @@ public class Database {
 	
 	private void addTitleSortedBook(Book book) {
 		//Checks if the books list is empty
-			if(booksSortedTitle.isEmpty()) {
-				booksSortedTitle.add(book);
+			if(booksST.isEmpty()) {
+				booksST.add(book);
 				return;
 			}
 			
 			//reverse insert algorithm
-			for(int i = booksSortedTitle.size(); i >= 0; i--) {
-				if(book.getTitle().compareTo(booksSortedTitle.get(i).getTitle()) >= 0) {
-					booksSortedTitle.add(i + 1, book);
+			for(int i = booksST.size(); i >= 0; i--) {
+				if(book.getTitle().compareTo(booksST.get(i).getTitle()) >= 0) {
+					booksST.add(i + 1, book);
 					return;
 				}
 			}
 			
 			//if the book title is first in alphabetical order
-			booksSortedTitle.add(0, book);
+			booksST.add(0, book);
 	}
 	
 	
 	/**
-	 * adds a Book to books in order of isbn number (smallest to greatest) by reverse insertion sort
-	 * Time complexity: max: o(n)
+	 * 
 	 * 
 	 * @param book : Book, the book to be added
 	 */
@@ -98,8 +107,7 @@ public class Database {
 	}
 	
 	/**
-	 * adds a StudentUser to users in sorted order of studentID number (smallest to greatest) using reverse insertion sort
-	 * Time complexity: max: o(n) 
+	 * 
 	 * 
 	 * @param user : StudentUser the StudentUser to add
 	 */
