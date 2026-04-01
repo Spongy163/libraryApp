@@ -34,7 +34,7 @@ public class Book extends LibraryItem implements Borrowable {
 		this.genre = genre;
 	}
 	
-	
+
 	//----------------------------
 	// Getter and Setter Methods
 	//----------------------------
@@ -117,6 +117,6 @@ public class Book extends LibraryItem implements Borrowable {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + " Author: " + author + " Genre: " + genre; 
+		return super.toString() + ", Author: " + author + ", Genre: " + genre; 
 	}
 }
