@@ -53,6 +53,13 @@ public abstract class User {
 		return userID;
 	}
 	
+	/**
+	 * @return the user name
+	 */
+	public String getName() {
+		return name;
+	}
+	
 	
 	//----------------------------
 	// Abstract methods
