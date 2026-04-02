@@ -10,7 +10,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public abstract class LibraryItem {
-
 	//----------------------------
 	// Data fields
 	//----------------------------
@@ -39,35 +38,10 @@ public abstract class LibraryItem {
 		//dueDate left null
 	}
 
-
 	
 	//----------------------------
 	// Getter and Setter Methods
 	//----------------------------
-	
-	/** @return the isCheckedOut
-	 */
-	public boolean isCheckedOut() {
-		return isCheckedOut;
-	}
-
-	/** @param isCheckedOut the isCheckedOut to set
-	 */
-	public void setCheckedOut(boolean isCheckedOut) {
-		this.isCheckedOut = isCheckedOut;
-	}
-
-	/** @return the dueDate
-	 */
-	public LocalDate getDueDate() {
-		return dueDate;
-	}
-
-	/** @param dueDate the dueDate to set
-	 */
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
-	}
 
 	/** @return the itemID
 	 */
@@ -87,12 +61,13 @@ public abstract class LibraryItem {
 		return publisher;
 	}
 	
+	
 	//----------------------------
 	// Methods
 	//----------------------------
 	@Override
 	public String toString() {
-		return "ItemID: " + itemID + " Title: " + title + " Publisher: " + publisher + " Check-Out status: " + checkedOutAsString() + " Due date: " + dueDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")) ; 
+		return "ItemID: " + itemID + ", Title: " + title + ", Publisher: " + publisher + ", Check-Out status: " + checkedOutAsString() + ", Due date: " + dueDateStringFormat(); 
 	}
 
 	/**
@@ -108,10 +83,21 @@ public abstract class LibraryItem {
 		return checkedOutStatus;
 	}
 	
+	/**
+	 * @return a formatted dueDate or none if null
+	 */
+	public String dueDateStringFormat() {
+		if(dueDate == null) {return "none";} // Null check
+		
+		return dueDate.format(DateTimeFormatter.ofPattern("MM-dd-yyyy"));
+	}
+	
 	//----------------------------
 	// Abstract Methods
 	//----------------------------
-	public abstract String getItemType(); // Returns a short label describing the item type ie. (Book) 
 	
-	
+	/**
+	 * @return Returns a short label describing the item type ie. (Book) 
+	 */
+	public abstract String getItemType();
 }

@@ -9,6 +9,8 @@ package Project1;
 
 import java.util.ArrayList;
 
+import libraryItems.Book;
+
 public class StudentUser {
 	/* STATIC DATA FIELDS
 	 * - userCount:int = counts how many users are created. Useful for data analytics
