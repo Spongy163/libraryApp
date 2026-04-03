@@ -108,7 +108,7 @@ public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 	
 	/**
 	 * Checks the first four letters of the itemID and determines the type of LibraryItem
-	 * @return the Item type as a String
+	 * @return the Item type as an enum ItemType
 	 */
 	@Override
 	protected ItemType checkType(String ID) {
