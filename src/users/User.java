@@ -8,6 +8,7 @@ package users;
 
 import java.util.ArrayList;
 
+import FileHandling.UserType;
 import libraryItems.Borrowable;
 import libraryItems.LibraryItem;
 
@@ -60,6 +61,12 @@ public abstract class User {
 		return name;
 	}
 	
+	/**
+	 * @return the user's major
+	 */
+	public String getMajor() {
+		return major;
+	}
 	
 	//----------------------------
 	// Abstract methods
@@ -75,6 +82,10 @@ public abstract class User {
 	 */
 	public abstract int getLoanPeriod();
 	
+	/**
+	 * @return The type of User
+	 */
+	public abstract UserType getUserType();
 	
 	//----------------------------
 	// Methods

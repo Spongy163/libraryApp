@@ -7,6 +7,7 @@
 package libraryItems;
 
 import java.time.LocalDate;
+import FileHandling.ItemType;
 
 public class Book extends LibraryItem implements Borrowable {
 	//----------------------------
@@ -38,7 +39,8 @@ public class Book extends LibraryItem implements Borrowable {
 	//----------------------------
 	// Getter and Setter Methods
 	//----------------------------
-	
+
+
 	/**
 	 * @return the author
 	 */
@@ -105,12 +107,13 @@ public class Book extends LibraryItem implements Borrowable {
 	//----------------------------
 	
 	/**
-	 * @return Returns a short label describing the item type (Book)
+	 * @return Returns an enum of the ItemType
 	 */
 	@Override
-	public String getItemType() {
-		return "(Book)";
+	public ItemType getItemType() {
+		return ItemType.BOOK;
 	}
+	
 	
 	/**toString()
 	 * converts the Book object into string format

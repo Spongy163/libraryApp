@@ -9,6 +9,8 @@ package libraryItems;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import FileHandling.ItemType;
+
 public abstract class LibraryItem {
 	//----------------------------
 	// Data fields
@@ -61,6 +63,19 @@ public abstract class LibraryItem {
 		return publisher;
 	}
 	
+	/**
+	 * @return due date
+	 */
+	public LocalDate getDueDate(){
+		return dueDate;
+	}
+	
+	/**
+	 * @return the checkout status
+	 */
+	public boolean isCheckedOut() {
+		return isCheckedOut;
+	}
 	
 	//----------------------------
 	// Methods
@@ -99,5 +114,5 @@ public abstract class LibraryItem {
 	/**
 	 * @return Returns a short label describing the item type ie. (Book) 
 	 */
-	public abstract String getItemType();
+	public abstract ItemType getItemType();
 }

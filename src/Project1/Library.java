@@ -7,12 +7,13 @@
 
 package Project1;
 
-import java.io.*;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import libraryItems.Book;
-
-import java.time.LocalDate;
+import libraryItems.LibraryItem;
+import users.User;
 
 public class Library {
 	
@@ -26,14 +27,14 @@ public class Library {
 	 * CONSTRUCTOR
 	 * load from unsorted input files constructor
 	 * 
-	 * @param booksFilename
-	 * @param studentsFilename
+	 * @param itemsFilename
+	 * @param usersFilename
 	 * @throws IOException
 	 */
-	public Library(String booksFilename, String studentsFilename) throws IOException {
+	public Library(String itemsFilename, String usersFilename) throws IOException {
 		this.database = new Database();
-		this.database.loadBooksFromFile(booksFilename);
-		this.database.loadStudentUsersFromFile(studentsFilename); 
+		this.database.loadItemFromFile(itemsFilename);
+		this.database.loadUserFromFile(usersFilename); 
 	}
 	
 	
@@ -42,11 +43,11 @@ public class Library {
 	/**
 	 * Calls binary search method within Database
 	 * 
-	 * @param isbn
+	 * @param itemID
 	 * @return Book or Null
 	 */
-	public Book searchBookByISBN(String isbn) {
-		return database.findBookByISBN(isbn);
+	public LibraryItem findItemByItemID(String itemID) {
+		return database.findItemByitemID(itemID);
 	}
 	
 	/**
@@ -55,8 +56,8 @@ public class Library {
 	 * @param keyword
 	 * @return an ArrayList<Book> of all matching books.
 	 */
-	public ArrayList<Book> searchBookByTitle(String keyword) {
-		return database.findBooksWithKeyword(keyword);
+	public ArrayList<LibraryItem> searchItemsByTitle(String keyword) {
+		return database.findItemsByTitle(keyword);
 	}
 	
 	/**
@@ -74,24 +75,23 @@ public class Library {
 	 * checks out a book to the user
 	 * 
 	 * @param user
-	 * @param book
+	 * @param libraryItem
 	 * @return boolean : check out result
 	 */
-	public boolean checkoutBook(StudentUser user, Book book) {
+	public boolean checkoutItem(User user, LibraryItem libraryItem) {
 		
 
-		/* Checks if the book and user are null
-		 * Checks if the book is checked out
+		/* Checks if the book and user are real
 		 * Checks if the book and user do not belong to the library
 		 * returns false if any of these are true
 		 */
-		if(user == null||book == null||book.isCheckedOut()||database.findBookByISBN(book.getIsbn()) == null||database.findUserById(user.getUserID()) == null) {
+		if(user == null||libraryItem == null||database.findItemByitemID(libraryItem.getItemID()) == null||database.findUserByuserID(user.getUserID()) == null){
 			return false;
 		}
 		
-		boolean result = user.addBook(book);
+		boolean result = user.addItem(libraryItem);
 		if(result) {
-			database.addCheckoutLog(book, user);
+			database.addCheckoutLog(libraryItem, user);
 		}
 		return result;
 	}
@@ -100,24 +100,23 @@ public class Library {
 	 * returns a book from a user
 	 * 
 	 * @param user
-	 * @param book
+	 * @param libraryItem
 	 * @return
 	 */
-	public boolean returnBook(StudentUser user, Book book) {
+	public boolean returnItem(User user, LibraryItem libraryItem) {
 		
 
-		/* Checks if the book and user are null
-		 * Checks if the book is not checked out
-		 * Checks if the book and user do not belong to the library
+		/* Checks if the item and user are null
+		 * Checks if the item and user do not belong to the library
 		 * returns false if any of these are true
 		 */
-		if(user == null||book == null||!book.isCheckedOut()||database.findBookByISBN(book.getIsbn()) == null||database.findUserById(user.getUserID()) == null) {
+		if(user == null||libraryItem == null||database.findItemByitemID(libraryItem.getItemID()) == null||database.findUserByuserID(user.getUserID()) == null) {
 			return false;
 		}
 		
-		boolean result = user.removeBook(book);
+		boolean result = user.removeItem(libraryItem);
 		if(result) {
-			database.addReturnLog(book, user);
+			database.addReturnLog(libraryItem, user);
 		}
 		
 		return result;
@@ -127,14 +126,14 @@ public class Library {
 	/**
 	 * gets expected return date if the book is checked out
 	 * 
-	 * @param isbn
+	 * @param itemID
 	 * @return
 	 */
-	public LocalDate getExpectedReturnDate(String isbn) {
-		Book book = database.findBookByISBN(isbn);
+	public LocalDate getExpectedReturnDate(String itemID) {
+		LibraryItem item = database.findItemByitemID(itemID);
 		
-		if(book != null && book.isCheckedOut()) {
-			return book.getDueDate();
+		if(item != null && item.isCheckedOut()) {
+			return item.getDueDate();
 		}
 		
 		return null;
@@ -146,37 +145,18 @@ public class Library {
 	 * @param user
 	 * @return
 	 */
-	public StudentUser findUserByID(String user) {
-		return database.findUserById(user);
+	public User findUserByID(String user) {
+		return database.findUserByuserID(user);
 	}
 	
 	/**
 	 * Calls database for an array of overdue books
 	 * prints out the array
 	 */
-	public void printOverdueBooks() {
-		ArrayList<Book> overdue = database.findOverdueBooks();
-		System.out.println("Over due books: ");
+	public ArrayList<LibraryItem> getOverdueItems() {
+		ArrayList<LibraryItem> overdue = database.findOverdueItems();
 		
-		if(overdue == null) {
-			System.out.println();
-			System.out.print("There are no over due books!");
-			System.out.println();
-			return;
-		}
-		
-		if (overdue.isEmpty()) {
-			System.out.println();
-			System.out.print("There are no over due books!");
-			System.out.println();
-			return;
-		}
-		
-		for (Book book : overdue) {
-			System.out.println(book);
-		}
-		
-		System.out.println("===========================================");
+		return overdue;
 	}
 	
 	/**
@@ -186,10 +166,5 @@ public class Library {
 		return database.returnAnalytics();
 	}
 	
-	/**
-	 * Calls database to print a summary
-	 */
-	public void printDatabaseSummary() {
-		database.printSummary();
-	}
+	
 }

@@ -1,5 +1,7 @@
 package users;
 
+import FileHandling.UserType;
+
 public class Student extends User {
 
 	//----------------------------
@@ -39,7 +41,15 @@ public class Student extends User {
 	public int getLoanPeriod() {
 		return Student.LOAN_PERIOD;
 	}
-
+	
+	/**
+	 * @return UserType.STUDENT
+	 */
+	@Override
+	public UserType getUserType() {
+		return UserType.STUDENT;
+	}
+	
 	/**
 	 * 
 	 */
