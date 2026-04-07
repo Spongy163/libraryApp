@@ -31,7 +31,7 @@ public class Library {
 	 * @param usersFilename
 	 * @throws IOException
 	 */
-	public Library(String itemsFilename, String usersFilename) throws IOException {
+	public Library(String itemsFilename, String usersFilename) {
 		this.database = new Database();
 		this.database.loadItemFromFile(itemsFilename);
 		this.database.loadUserFromFile(usersFilename); 
