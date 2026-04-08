@@ -22,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import libraryItems.LibraryItem;
+import libraryItems.Periodical;
 import users.User;
 
 public class GUInterface {
@@ -259,8 +260,12 @@ public class GUInterface {
 		boolean result = library.checkoutItem(user, item);
 		
 		if (result) {
-			serviceResults.println("Checkout was successful");
+			serviceResults.println("Checkout successful! Due: " + item.getDueDate());
 		} else {
+			if(item instanceof Periodical) {
+				serviceResults.println("Error: Can't checkout Periodical");
+				return;
+			}
 			serviceResults.println("Checkout was not successful");
 		}
 	}
@@ -313,8 +318,23 @@ public class GUInterface {
 	 * displays borrowed items for entered userID
 	 */
 	public void borrowedItemsAction() {
-		User user = library.findUserByID(inputs.getUserIDInput());
+		String userIDInput = inputs.getUserIDInput();
+		
+		if(userIDInput.isEmpty()) {
+			serviceResults.println("Error: Please enter User ID.");
+			return;
+		}
+		
+		User user = library.findUserByID(userIDInput);
+		
+		if (user == null) {
+			serviceResults.println("Error: invalid User ID.");
+			return;
+		}
+		
 		ArrayList<LibraryItem> foundList = user.getCheckedOutItems();
+		
+		
 		
 		
 		serviceResults.println("=== Currently borrowed items ===");

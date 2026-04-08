@@ -336,6 +336,7 @@ public class Database {
 		int[] userCounts = countUsersForSummary();
 		
 		summary.append("\n===USERS ANALYSIS===");
+		summary.append("\nTotal Users: ").append(userCounts[0] + userCounts[1]);
 		summary.append("\nTotal Students: ").append(userCounts[0]);
 		summary.append("\nTotal Faculty: ").append(userCounts[1]);
 		summary.append("\n\n");
