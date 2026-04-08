@@ -41,7 +41,7 @@ public class Library {
 	//METHODS
 	
 	/**
-	 * Calls binary search method within Database
+	 * finds item by id
 	 * 
 	 * @param itemID
 	 * @return Book or Null
@@ -60,16 +60,7 @@ public class Library {
 		return database.findItemsByTitle(keyword);
 	}
 	
-	/**
-	 * calls Database findBooksByTitle(title);
-	 * 
-	 * @param title
-	 * @return
-	 */
-	public Book searchBookByFullTitle(String title) {
-		return database.findBookByTitle(title);
-	}
-
+	
 	
 	/**
 	 * checks out a book to the user
@@ -164,6 +155,10 @@ public class Library {
 	 */
 	public ArrayList<LogEntry> returnAnalytics() {
 		return database.returnAnalytics();
+	}
+	
+	public String returnSummary() {
+		return database.getSummary().toString();
 	}
 	
 	

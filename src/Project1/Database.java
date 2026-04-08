@@ -141,14 +141,14 @@ public class Database {
 		ArrayList<LibraryItem> matchingItems = new ArrayList<>();
 		
 		for(LibraryItem libraryItem : items) {
-			if(libraryItem.getTitle().equalsIgnoreCase(title)) {
+			if(libraryItem.getTitle().toLowerCase().contains(title.toLowerCase())) {
 				matchingItems.add(libraryItem);
 			}
 		}
 		
 		if (matchingItems.size() > 0) {
 			return matchingItems;
-		}
+		} 
 		return null; 
 	}
 	

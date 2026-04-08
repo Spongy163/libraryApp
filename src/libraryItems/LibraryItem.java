@@ -82,7 +82,7 @@ public abstract class LibraryItem {
 	//----------------------------
 	@Override
 	public String toString() {
-		return "ItemID: " + itemID + ", Title: " + title + ", Publisher: " + publisher + ", Check-Out status: " + checkedOutAsString() + ", Due date: " + dueDateStringFormat(); 
+		return "ItemID: " + itemID + "\nTitle: " + title + "\nPublisher: " + publisher + "\nCheck-Out status: " + checkedOutAsString() + "\nDue date: " + dueDateStringFormat(); 
 	}
 
 	/**
@@ -115,4 +115,7 @@ public abstract class LibraryItem {
 	 * @return Returns a short label describing the item type ie. (Book) 
 	 */
 	public abstract ItemType getItemType();
+
+
+	public abstract String outputString();
 }

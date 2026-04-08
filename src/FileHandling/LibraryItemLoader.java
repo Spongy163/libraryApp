@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import libraryItems.Book;
 import libraryItems.LibraryItem;
+import libraryItems.Periodical;
+import libraryItems.Recordings;
 
 public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 	//----------------------------
@@ -67,10 +69,10 @@ public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 				addBook(itemData);
 				break;
 			case PERIODICAL: 
-				//addPeriodical(itemData);
+				addPeriodical(itemData);
 				break;
 			case RECORDINGS:
-				//addRecordings(itemData);
+				addRecordings(itemData);
 				break;
 			default:
 				System.out.println("Error: Unable to determine libraryItem type " + itemData[0]);
@@ -145,7 +147,15 @@ public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 	
 	//TODO finish method
 	private void addRecordings(String[] itemData) {
-			
+		// Book initialization and addition
+		Recordings recordings;
+		try {
+			recordings = new Recordings(itemData[0], itemData[1], itemData[2], itemData[3], itemData [4]);
+		} catch (IndexOutOfBoundsException iobe) {
+			System.out.println("Error: Index out of bounds exception while trying to add Book from itemData");
+			return;
+		}
+		output.add(recordings);
 	}
 	
 	//TODO finish method
@@ -154,13 +164,14 @@ public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 		// Volume to int parsing
 		int volumeInt;
 		try {
-			volumeInt = Integer.parseInt(itemData[3]);
+			volumeInt = Integer.parseInt(itemData[4]);
 		} catch (NumberFormatException nfe) {
 			System.out.println("Error: periodical volume was not able to be parsed");
 			return;
 		}
 		
-		// TODO add initialization 
+		Periodical periodical = new Periodical(itemData[0], itemData[1], itemData[2], itemData[3], volumeInt);
+		output.add(periodical);
 	}
 	
 }

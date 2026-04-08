@@ -120,6 +120,11 @@ public class Book extends LibraryItem implements Borrowable {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + ", Author: " + author + ", Genre: " + genre; 
+		return super.toString() + "\nAuthor: " + author + "\nGenre: " + genre + "\n"; 
+	}
+	
+	@Override
+	public String outputString() {
+		return super.getTitle() + " " + getItemType();
 	}
 }

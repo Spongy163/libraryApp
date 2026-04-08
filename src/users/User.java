@@ -190,6 +190,24 @@ public abstract class User {
 		return false;
 	}
 	
+	/**
+	 * Returns items that are checked out
+	 * copies the arraylist
+	 * shallow copies the library items
+	 */
+	public ArrayList<LibraryItem> getCheckedOutItems() {
+		ArrayList<LibraryItem> checkedOutItems = new ArrayList<>();
+		
+		for(LibraryItem libraryItem : this.checkedOutItems) {
+			checkedOutItems.add(libraryItem);
+		}
+		
+		return checkedOutItems;
+	}
+	
+	public String outputString() {
+		return getUserID() + " " + getName() + " " + getUserType();
+	}
 	
 	//----------------------------
 	// Override Methods

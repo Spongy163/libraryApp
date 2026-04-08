@@ -2,7 +2,7 @@ package FileHandling;
 
 import java.util.ArrayList;
 
-import libraryItems.Book;
+import users.Faculty;
 import users.Student;
 import users.User;
 
@@ -46,7 +46,7 @@ public class UserLoader extends FileLoader<User, UserType> {
 				itemData[i] = dataReader.nextLine();
 			}
 			
-			if(itemData[4] == null) {break;} // Checks the for loop operation success
+			if(itemData[3] == null) {break;} // Checks the for loop operation success
 			
 			processData(itemData);
 			
@@ -69,7 +69,7 @@ public class UserLoader extends FileLoader<User, UserType> {
 				addStudent(itemData);
 				break;
 			case FACULTY: 
-				//addFaculty(itemData);
+				addFaculty(itemData);
 				break;
 			default:
 				System.out.println("Error: Unable to determine libraryItem type " + itemData[0]);
@@ -141,9 +141,19 @@ public class UserLoader extends FileLoader<User, UserType> {
 		output.add(student);
 	}
 	
-	//TODO finish method
+	/**
+	 * 
+	 * @param itemData
+	 */
 	private void addFaculty(String[] itemData) {
-			
+		Faculty faculty;
+		try {
+			faculty = new Faculty(itemData[0], itemData[1], itemData[2], itemData[3]);
+		} catch (IndexOutOfBoundsException iobe) {
+			System.out.println("Error: Index out of bounds exception while trying to add Student from itemData");
+			return;
+		}
+		output.add(faculty);
 	}
 	
 }
