@@ -1,4 +1,8 @@
-
+/* Brighton Drill
+ * Title: FileHandling
+ * Date: 4/7/2026
+ * Description: An abstract class for file handling classes
+ */
 
 package FileHandling;
 
@@ -11,9 +15,9 @@ public abstract class FileLoader<T, E extends Enum<E>> {
 	//----------------------------
 	// Data Fields
 	//----------------------------
-	protected Scanner dataReader;
-	protected File inputFile; 
-	protected ArrayList<T> output;
+	protected Scanner dataReader; // reads data from file
+	protected File inputFile; // the input file
+	protected ArrayList<T> output; // An ArrayList of derived data
 	
 	//----------------------------
 	// Constructor

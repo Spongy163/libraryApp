@@ -1,3 +1,9 @@
+/* Brighton Drill
+ * Title: GUILibraryApp
+ * Date: 4/7/2026
+ * Description: starts the library application
+ */
+
 package GUI;
 
 import java.io.FileNotFoundException;
@@ -9,14 +15,17 @@ import javafx.stage.Stage;
 
 public class GUILibraryApp extends Application {
 	
-	GUInterface appInterface;
-	private Stage primaryStage;
+	//----------------------------
+	// Fields
+	//----------------------------
+	GUInterface appInterface; // appInterface
 	
-	
+	/**
+	 * Starts the application and is given a stage
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		this.primaryStage = primaryStage;
 		
 		//Library Creation
 		String ItemFileName = "LibraryItems.dat";
@@ -33,6 +42,10 @@ public class GUILibraryApp extends Application {
 		primaryStage.show();
 	}
 	
+	/**
+	 * launches the start method
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 	}

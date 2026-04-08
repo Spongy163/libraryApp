@@ -1,3 +1,10 @@
+/* Brighton Drill
+ * Title: User Loader
+ * Date: 4/6/2026
+ * Description: Loads User data from a file and returns an arrayList of users
+ */
+
+
 package FileHandling;
 
 import java.util.ArrayList;
@@ -126,7 +133,7 @@ public class UserLoader extends FileLoader<User, UserType> {
 	// Add Methods
 	//----------------------------
 	/**
-	 * takes item data read from the file to create and add a book to items ArrayList
+	 * takes item data read from the file to create and add a student to the arraylist.
 	 * @param itemData
 	 */
 	private void addStudent(String[] itemData) {
@@ -142,7 +149,7 @@ public class UserLoader extends FileLoader<User, UserType> {
 	}
 	
 	/**
-	 * 
+	 * takes item data read from the file to create and add a faculty to the arraylist.
 	 * @param itemData
 	 */
 	private void addFaculty(String[] itemData) {

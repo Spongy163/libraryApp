@@ -16,7 +16,6 @@ public class ServiceResults {
 	//----------------------------
 	// Controls
 	//----------------------------
-	
 	private Label serviceResultLabel = new Label("Service Results");
 	private TextArea serviceResultsOutput;
 	
@@ -48,14 +47,25 @@ public class ServiceResults {
 	//----------------------------
 	// Methods
 	//----------------------------
+	/**
+	 * @return the class container
+	 */
 	public VBox getContainer() {
 		return container;
 	}
 	
+	/**
+	 * prints to the serviceResults screen
+	 * @param printRequest
+	 */
 	public void print(String printRequest) {
 		serviceResultsOutput.appendText(printRequest);
 	}
 	
+	/**
+	 * prints and goes to the next line on the serviceResults screen
+	 * @param printRequest
+	 */
 	public void println(String printRequest) {
 		serviceResultsOutput.appendText(printRequest);
 		serviceResultsOutput.appendText("\n");

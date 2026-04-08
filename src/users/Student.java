@@ -1,3 +1,9 @@
+/* Brighton Drill
+ * Title: Student
+ * Date: 4/7/2026
+ * Description: Represents a student user
+ */
+
 package users;
 
 import FileHandling.UserType;

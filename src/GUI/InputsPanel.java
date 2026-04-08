@@ -1,7 +1,7 @@
 /* Brighton Drill
  * Title: TopLeftPanel
  * Date: 4/7/2026
- * Description: A class that represents the topLeft panel of the GUI
+ * Description: A class that handles the input textFields
  */
 
 
@@ -58,6 +58,9 @@ public class InputsPanel {
 	//----------------------------
 	// Constructor methods
 	//----------------------------
+	/**
+	 * initializes the TextFields and sets their width equal
+	 */
 	private void instantiateTextFields() {
 		itemID = new TextField();
 		userID = new TextField();
@@ -71,6 +74,9 @@ public class InputsPanel {
 		keyWord.setPrefWidth(preferredWidth);
 	}
 	
+	/**
+	 * initializes labels and sets width equal
+	 */
 	private void instantiateLabels() {
 		
 		//initializing and setting labels
@@ -87,6 +93,9 @@ public class InputsPanel {
 		keyWordLabel.setPrefWidth(preferredWidth);
 	}
 	
+	/**
+	 * puts controls in their respective containers and adds the containers to one container
+	 */
 	private void fillContainers() {
 		int padding = 20;
 		
@@ -101,18 +110,30 @@ public class InputsPanel {
 	//----------------------------
 	// Get Methods
 	//----------------------------
+	/**
+	 * @return the class container
+	 */
 	protected VBox getContainer() {
 		return container;
 	}
 	
+	/**
+	 * @return information from itemID TextField
+	 */
 	protected String getItemIDInput() {
 		return itemID.getText();
 	}
 	
+	/**
+	 * @return information from userID TextField
+	 */
 	protected String getUserIDInput() {
 		return userID.getText();
 	}
 	
+	/**
+	 * @return information from keyword TextField
+	 */
 	protected String getKeyWordInput() {
 		return keyWord.getText();
 	}

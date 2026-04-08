@@ -1,7 +1,7 @@
 /* Brighton Drill
- * Title: bottom left panel
+ * Title: systemReport
  * Date: 4/7/2026
- * Description: bottom left panel
+ * Description: systemreport
  */
 
 package GUI;
@@ -35,6 +35,9 @@ public class SystemReportPanel {
 	//----------------------------
 	// Constructor Helper
 	//----------------------------
+	/**
+	 * initializes and sets size of TextArea
+	 */
 	public void setTextArea() {
 		reportOutput = new TextArea();
 		 
@@ -49,15 +52,26 @@ public class SystemReportPanel {
 	//----------------------------
 	// Methods
 	//----------------------------
-	
+	/**
+	 * @return class container
+	 */
 	public VBox getContainer() {
 		return container;
 	}
 	
+	/**
+	 * prints to the systemReport screen
+	 * @param printRequest
+	 */
 	public void print(String printRequest) {
 		reportOutput.appendText(printRequest);
 	}
 	
+	/**
+	 * prints to the systemReport screen
+	 * goes to the next line
+	 * @param printRequest
+	 */
 	public void println(String printRequest) {
 		reportOutput.appendText(printRequest);
 		reportOutput.appendText("\n");

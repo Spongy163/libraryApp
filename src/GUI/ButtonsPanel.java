@@ -1,7 +1,7 @@
 /* Brighton Drill
- * Title: TopRightCorner
+ * Title: buttons panel
  * Date: 4/7/2026
- * Description: top right coner of the app ui
+ * Description: buttons panel of the UI
  */
 
 
@@ -34,7 +34,6 @@ public class ButtonsPanel {
 	//Containers
 	
 	private GridPane buttonContainer;
-	
 	private VBox container;
 	
 	
@@ -54,8 +53,11 @@ public class ButtonsPanel {
 	//----------------------------
 	// Constructor helper methods
 	//----------------------------
-	
+	/**
+	 * instantiates buttons and sets their size
+	 */
 	private void instantiateButtons() {
+		//Instantiation and label setting
 		itemSearch = new Button("Item Search");
 		keywordSearch = new Button("Keyword Search");
 		checkout = new Button("Checkout");
@@ -69,6 +71,7 @@ public class ButtonsPanel {
 		int prefferedWidth = 300;
 		int prefferedHeight = 40;
 		
+		//size setting
 		itemSearch.setPrefSize(prefferedWidth, prefferedHeight);
 		keywordSearch.setPrefSize(prefferedWidth, prefferedHeight);
 		checkout.setPrefSize(prefferedWidth, prefferedHeight);
@@ -80,7 +83,13 @@ public class ButtonsPanel {
 		
 	}
 	
+	/**
+	 * connects ActionEvents to userInterface actions
+	 * @param userInterface
+	 */
 	private void tieEventsToButtons(GUInterface userInterface) {
+		
+		//Connects ActionEvents to userInterface actions
 		itemSearch.setOnAction(e -> userInterface.itemSearchAction());
 		keywordSearch.setOnAction(e -> userInterface.keywordSearchAction());
 		checkout.setOnAction(e -> userInterface.checkoutAction());
@@ -91,6 +100,9 @@ public class ButtonsPanel {
 		menu.setOnAction(e -> userInterface.exitAction());
 	}
 	
+	/**
+	 * configures the container layouts
+	 */
 	private void fillContainers() {
 		buttonContainer = new GridPane();
 	
@@ -109,6 +121,9 @@ public class ButtonsPanel {
 	//----------------------------
 	// Get methods
 	//----------------------------
+	/**
+	 * @return the container for the button panel
+	 */
 	public VBox getContainer() {
 		return container;
 	}

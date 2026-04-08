@@ -80,6 +80,9 @@ public abstract class LibraryItem {
 	//----------------------------
 	// Methods
 	//----------------------------
+	/**
+	 * returns the object as a string
+	 */
 	@Override
 	public String toString() {
 		return "ItemID: " + itemID + "\nTitle: " + title + "\nPublisher: " + publisher + "\nCheck-Out status: " + checkedOutAsString() + "\nDue date: " + dueDateStringFormat(); 
@@ -116,6 +119,8 @@ public abstract class LibraryItem {
 	 */
 	public abstract ItemType getItemType();
 
-
+	/**
+	 * @return a nicer formatted string for output
+	 */
 	public abstract String outputString();
 }

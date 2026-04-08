@@ -1,3 +1,10 @@
+/* Brighton Drill
+ * Title: Recordings
+ * Date: 4/7/2026
+ * Description: A class that represents a recordings
+ */
+
+
 package libraryItems;
 
 import java.time.LocalDate;

@@ -141,7 +141,7 @@ public class Library {
 	}
 	
 	/**
-	 * Calls database for an array of overdue books
+	 * Calls database for an array of overdue LibraryItems
 	 * prints out the array
 	 */
 	public ArrayList<LibraryItem> getOverdueItems() {
@@ -151,12 +151,15 @@ public class Library {
 	}
 	
 	/**
-	 * 
+	 * returns analytic arraylist
 	 */
 	public ArrayList<LogEntry> returnAnalytics() {
 		return database.returnAnalytics();
 	}
 	
+	/**
+	 * @return database summary as a string
+	 */
 	public String returnSummary() {
 		return database.getSummary().toString();
 	}

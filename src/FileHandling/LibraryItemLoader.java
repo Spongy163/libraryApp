@@ -1,3 +1,11 @@
+/* Brighton Drill
+ * Title: LibraryItemLoader
+ * Date: 4/7/2026
+ * Description: Loads library items and returns an ArrayList<LibraryItem>
+ */
+
+
+
 package FileHandling;
 
 import java.util.ArrayList;
@@ -145,7 +153,10 @@ public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 		output.add(book);
 	}
 	
-	//TODO finish method
+	/**
+	 * takes item data read from the file to create and add a recordings to items ArrayList
+	 * @param itemData
+	 */
 	private void addRecordings(String[] itemData) {
 		// Book initialization and addition
 		Recordings recordings;
@@ -158,7 +169,10 @@ public class LibraryItemLoader extends FileLoader<LibraryItem, ItemType> {
 		output.add(recordings);
 	}
 	
-	//TODO finish method
+	/**
+	 * takes item data read from the file to create and add a periodical to items ArrayList
+	 * @param itemData
+	 */
 	private void addPeriodical(String[] itemData) {
 		
 		// Volume to int parsing

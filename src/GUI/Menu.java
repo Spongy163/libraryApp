@@ -53,6 +53,13 @@ public class Menu {
 		menuScene = new Scene(container, 1300, 824);
 	}
 	
+	
+	//----------------------------
+	// Constructor methods
+	//----------------------------
+	/**
+	 * sets the button sizes and fonts equal to eachother
+	 */
 	private void setButtonSize() {
 		int width = 400;
 		int height = 100;
@@ -68,13 +75,19 @@ public class Menu {
 		
 	}
 	
+	/**
+	 * sets ActionEvents to appInterface actions
+	 * @param appInterface
+	 */
 	private void setButtonActions(GUInterface appInterface) {
 		startButton.setOnAction(e -> appInterface.startApp());
 		creditsButton.setOnAction(e -> appInterface.creditsScene());
 		exitButton.setOnAction(e -> appInterface.close());
 	}
 	
-	
+	/**
+	 * @return the menuScene
+	 */
 	public Scene getScene() {
 		return menuScene;
 	}

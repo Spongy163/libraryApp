@@ -55,7 +55,6 @@ public class GUInterface {
 	//----------------------------
 	// Constructor
 	//----------------------------
-	
 	public GUInterface(Library library, Stage primaryStage) {
 		//Setting library and stage
 		this.library = library;
@@ -73,15 +72,15 @@ public class GUInterface {
 		appScene = new Scene(container);
 		makeCreditsScene();
 		
-		
-		
-		
 	}
 
 
 	//----------------------------
 	// Constructor helper methods
 	//----------------------------
+	/**
+	 * Creates a credit Scene
+	 */
 	private void makeCreditsScene() {
 		int titleFontSize = 70;
 		int nameFontSize = 50;
@@ -118,7 +117,9 @@ public class GUInterface {
 	}
 	
 	
-	
+	/**
+	 * creates the different GUI corner classes
+	 */
 	private void instantiatePanels() {
 		//Menu
 		inputs = new InputsPanel();
@@ -128,6 +129,9 @@ public class GUInterface {
 		
 	}
 	
+	/**
+	 * builds the app container for the appScene
+	 */
 	private void buildAppContainer() {
 		container = new GridPane();
 		
@@ -139,22 +143,29 @@ public class GUInterface {
 		container.setPadding(new Insets(40));
 		container.setHgap(20);
 		container.setVgap(20);
-		
-		
 	}
 	
 	//----------------------------
 	// Menu Actions
 	//----------------------------
+	/**
+	 * sets the scene to appScene
+	 */
 	public void startApp() {
 		primaryStage.setScene(appScene);
 	}
 	
+	/**
+	 * sets scene to credits scene
+	 */
 	public void creditsScene() {
 		primaryStage.setScene(creditsScene);
 	}
 
-	
+	/**
+	 * passes menu scene to GUILibraryApp to set as the initial scene
+	 * @return menuScene
+	 */
 	public Scene getMenuScene() {
 	    return menuScene;
 	}
@@ -162,6 +173,9 @@ public class GUInterface {
 	//----------------------------
 	// Button Actions
 	//----------------------------
+	/**
+	 * searches for item using itemIDInput from inputs
+	 */
 	public void itemSearchAction() {
 		String userInput = inputs.getItemIDInput();
 		LibraryItem foundItem = library.findItemByItemID(userInput);
@@ -178,6 +192,9 @@ public class GUInterface {
 		}
 	}
 	
+	/**
+	 * searches for items using the keyword input
+	 */
 	public void keywordSearchAction() {
 		String userInput = inputs.getKeyWordInput();
 		ArrayList<LibraryItem> foundList = library.searchItemsByTitle(userInput);
@@ -199,6 +216,9 @@ public class GUInterface {
 		
 	}
 	
+	/**
+	 * attempts to checkout using itemID and userID inputs
+	 */
 	public void checkoutAction() {
 		String libraryItemInput = inputs.getItemIDInput();
 		String userIDInput = inputs.getUserIDInput();
@@ -245,6 +265,9 @@ public class GUInterface {
 		}
 	}
 	
+	/**
+	 * attempts to return using itemID and userID inputs
+	 */
 	public void returnItemAction() {
 		String libraryItemInput = inputs.getItemIDInput();
 		String userIDInput = inputs.getUserIDInput();
@@ -286,6 +309,9 @@ public class GUInterface {
 		}
 	}
 	
+	/**
+	 * displays borrowed items for entered userID
+	 */
 	public void borrowedItemsAction() {
 		User user = library.findUserByID(inputs.getUserIDInput());
 		ArrayList<LibraryItem> foundList = user.getCheckedOutItems();
@@ -303,6 +329,9 @@ public class GUInterface {
 		}
 	}
 	
+	/**
+	 * Displays mock data on overdue books
+	 */
 	public void overdueAction() {
 		ArrayList<LibraryItem> overdueBooks = library.getOverdueItems();
 		
@@ -318,16 +347,24 @@ public class GUInterface {
 		systemReport.println("==========================\n");
 	}
 	
+	/**
+	 * prints database summary to systemReport
+	 */
 	public void summaryAction() {
 		systemReport.print(library.returnSummary());
 		systemReport.println("\n");
 	}
 	
+	/**
+	 * goes back to the menu
+	 */
 	public void exitAction() {
 		primaryStage.setScene(menuScene);
 	}
 
-
+	/**
+	 * closes the application
+	 */
 	public void close() {
 		primaryStage.close();
 	}
