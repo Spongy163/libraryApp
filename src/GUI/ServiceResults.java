@@ -7,11 +7,12 @@
 
 package GUI;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
-public class ServiceResults {
+public class ServiceResults extends VBox {
 
 	//----------------------------
 	// Controls
@@ -19,16 +20,12 @@ public class ServiceResults {
 	private Label serviceResultLabel = new Label("Service Results");
 	private TextArea serviceResultsOutput;
 	
-	//container
-	private VBox container;
 	
 	//----------------------------
 	// Constructor
 	//----------------------------
 	public ServiceResults() {
 		setTextArea();
-		
-		container = new VBox(10, serviceResultLabel, serviceResultsOutput);
 	}
 
 	//----------------------------
@@ -37,22 +34,22 @@ public class ServiceResults {
 	private void setTextArea() {
 		serviceResultsOutput = new TextArea();
 		
-		int width = 600;
+		int width = 250;
 		int height = 500;
 		
 		serviceResultsOutput.setPrefSize(width, height);
 		
+		//VBox config
+		setPadding(new Insets(20));
+		setSpacing(5);
+		
+		
+		getChildren().addAll(serviceResultLabel, serviceResultsOutput);
 	}
 	
 	//----------------------------
 	// Methods
 	//----------------------------
-	/**
-	 * @return the class container
-	 */
-	public VBox getContainer() {
-		return container;
-	}
 	
 	/**
 	 * prints to the serviceResults screen
@@ -71,6 +68,9 @@ public class ServiceResults {
 		serviceResultsOutput.appendText("\n");
 	}
 	
+	public void clear() {
+		serviceResultsOutput.clear();
+	}
 	
 	
 	

@@ -16,10 +16,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 
-public class Menu {
+public class MenuScene {
 	//----------------------------
 	// Controls
 	//----------------------------
+	
 	private Label title = new Label("Library App!");
 	
 	protected Button startButton = new Button("Start"); // start button
@@ -30,11 +31,11 @@ public class Menu {
 	
 	private Scene menuScene; // scene
 	
-	
 	//----------------------------
 	// Constructor 
 	//----------------------------
-	public Menu(GUInterface appInterface) {
+	
+	public MenuScene(GUInterface appInterface) {
 		//Button alignment
 		setButtonSize();
 		
@@ -50,9 +51,8 @@ public class Menu {
 		setButtonActions(appInterface);
 		
 		//Scene setting
-		menuScene = new Scene(container, 1300, 824);
+		menuScene = new Scene(container, SizingSettings.SceneWidth, SizingSettings.SceneHeight);
 	}
-	
 	
 	//----------------------------
 	// Constructor methods

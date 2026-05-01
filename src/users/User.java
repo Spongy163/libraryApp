@@ -123,9 +123,10 @@ public abstract class User {
 
 	/**
 	 * Helper method for addItem()
+	 * also used in Library Actions
 	 * @return is the limit reached
 	 */
-	private boolean limitReached() {
+	public boolean limitReached() {
 		// Checks if the number of items the User has checked-out is greater or equal to the limit
 		if(getCheckedOutCount() >= getCheckoutLimit()) {
 			return true;

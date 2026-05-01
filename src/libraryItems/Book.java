@@ -29,8 +29,8 @@ public class Book extends LibraryItem implements Borrowable {
 	 * @param author
 	 * @param genre
 	 */
-	public Book(String itemID, String publisher, String title, String author, String genre) {
-		super(itemID, publisher, title);
+	public Book(String itemID, String title, String publisher, String author, String genre) {
+		super(itemID, title, publisher);
 		this.author = author;
 		this.genre = genre;
 	}

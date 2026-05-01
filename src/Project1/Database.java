@@ -7,6 +7,7 @@
 
 package Project1;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import FileHandling.ItemType;
@@ -83,6 +84,27 @@ public class Database {
 		LogEntry data = new LogEntry("RETURN", item.getTitle(), user.getName());
 		transactionLog.add(data);
 	}
+	
+	/**
+	 * Adds a checkout log to transactionLog from Strings
+	 * @param item 
+	 * @param user
+	 */
+	public void addCheckoutLog(String item, String user, LocalDateTime timeStamp) {
+		LogEntry data = new LogEntry("CHECKOUT", item, user, timeStamp);
+		transactionLog.add(data);
+	}
+	
+	/**
+	 * Adds a return log to transactionLog from Strings
+	 * @param book
+	 * @param user
+	 */
+	public void addReturnLog(String item, String user, LocalDateTime timeStamp) {
+		LogEntry data = new LogEntry("RETURN", item, user, timeStamp);
+		transactionLog.add(data);
+	}
+
 
 	
 	//----------------------------
@@ -146,10 +168,7 @@ public class Database {
 			}
 		}
 		
-		if (matchingItems.size() > 0) {
 			return matchingItems;
-		} 
-		return null; 
 	}
 	
 	public User findUserByuserID(String item) {

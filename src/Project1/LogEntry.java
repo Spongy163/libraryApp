@@ -45,10 +45,28 @@ public final class LogEntry {
 		entryCount++;
 	}
 
+	/**CONSTRUCTOR
+	 * Initializes LogEntry object
+	 * Accepts and sets action, title, userName, and timeStamp
+	 * 
+	 * @param action sets action to "CHECKOUT" or "RETURN"
+	 * @param title sets title from book
+	 * @param userName sets userName from StudentUser
+	 * @param timeStamp the timeStamp to set
+	 */
+	public LogEntry(String action, String title, String userName, LocalDateTime timeStamp) {
+		this.action = action;
+		this.title = title;
+		this.userName = userName;
+		this.timestamp = timeStamp;
+		entryCount++;
+	}
+	
+
 	/* GETTER Methods
 	 * There are no setter methods as the data should be immutable
 	 */
-	
+
 	/**
 	 * @return the entryCount
 	 */
